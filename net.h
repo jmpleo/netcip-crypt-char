@@ -3,7 +3,8 @@
 
 #include "block.h"
 
-class Network : public Block, public FixedRounds<8>
+class Network : public Block,
+                public FixedRounds<6>
 {
 public:
     Network()

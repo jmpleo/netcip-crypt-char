@@ -15,12 +15,12 @@ struct NetCip
     struct Enc : public Transform,
                  public Param
     {
-        void ProcessBlock(Block &block) override;
+        void ProcessBlock(Block &block);
     };
     struct Dec : public Transform,
                  public Param
     {
-        void ProcessBlock(Block &block) override;
+        void ProcessBlock(Block &block);
     };
 };
 

@@ -3,39 +3,32 @@
 
 #include <cassert>
 
+#include "fixedparam.h"
 #include "types.h"
 
-template <unsigned int N, unsigned int M>
-struct FixedBlockParam
-{
-    static const int SUBBLOCKSIZE = N;
-    static const int NUMSUBBLOCKS = M;
-};
-template <unsigned int S>
-struct FixedBlockSize
-{
-    static const int BLOCKSIZE = S;
-};
-template <unsigned int R>
-struct FixedRounds
-{
-    static const int ROUNDS = R;
-};
-struct Block : FixedBlockParam<3,4>
+struct Block : FixedBlockParam<4,2>
 {
     Block();
     Block(uint64_t);
+    Block(const Block& other);
+    Block(Block&&) = delete;
     bool IsZero() const;
     void Print() const;
     byte&  operator [] (unsigned i);
     Block& operator =  (uint64_t num);
+    Block& operator =  (const Block& other);
     Block& operator &= (const Block& other);
     Block& operator ++ ();
+    Block& operator ^= (const Block& other);
+    bool operator == (const Block& other);
+    operator bool() const { return !IsZero(); }
+
 private:
     byte subs[NUMSUBBLOCKS];
 };
 struct Transform
 {
-    virtual void ProcessBlock(Block &block) = 0;
+    void ProcessBlock(Block &block) {}
 };
+
 #endif

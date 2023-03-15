@@ -1,5 +1,6 @@
 #include "block.h"
 
+
 #include <iostream>
 
 void Block::Print() const
@@ -60,4 +61,33 @@ Block& Block::operator++()
         }
     }
     return *this;
+}
+Block::Block(const Block& other)
+{
+    for (int i = 0; i < NUMSUBBLOCKS; ++i) {
+        subs[i] = other.subs[i];
+    }
+}
+Block& Block::operator=(const Block& other)
+{
+    for (int i = 0; i < NUMSUBBLOCKS; ++i) {
+        subs[i] = other.subs[i];
+    }
+    return *this;
+}
+Block& Block::operator^=(const Block& other)
+{
+    for (int i = 0; i < NUMSUBBLOCKS; ++i) {
+        subs[i] = subs[i] ^ other.subs[i];
+    }
+    return *this;
+}
+bool Block::operator==(const Block& other)
+{
+    for (int i = 0; i < NUMSUBBLOCKS; ++i) {
+        if (subs[i] != other.subs[i]) {
+            return false;
+        }
+    }
+    return true;
 }

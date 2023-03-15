@@ -5,18 +5,15 @@ project(netcip-crypt-char)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -W --std=c++11")
 
-set(SOURCE_FILES key.cpp
-                 netcip.cpp
-                 block.cpp
-                 ai.cpp
-                 gaus.cpp
-                 lin-comb.cpp
-                 main.cpp)
+set(MDP_SOURCES key.cpp
+                netcip.cpp
+                block.cpp
+                mdp.cpp)
 
 #add_library(netcip SHARED STATIC ${SOURCE_FILES})
 #add_subdirectory(tests)
 
-add_executable(netcip-test ${SOURCE_FILES})
+add_executable(netcip-mdp ${MDP_SOURCES})
 
 #set(CMAKE_INSTALL_PREFIX  ${PROJECT_SOURCE_DIR})
 #set(LIB_DIR ${PROJECT_SOURCE_DIR}/lib)

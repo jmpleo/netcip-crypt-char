@@ -10,21 +10,21 @@
 #include <utility>
 
 void FormingMatrix(bool_mat &mat,
-                   bool_vec &func,
+                   const bool_vec &func,
                    std::vector<std::pair<uint64_t,
-                                         int>> &degs)
+                                         int>> &degs, bool negFunc)
 {
     uint64_t i, j,
              monom,
              funcLen = func.size(),
              matCols = funcLen >> 1;
     for (i = 0; i < funcLen; ++i) {
-        if (func[i]) {
+        if (func[i] ^ negFunc) {
             for (j = 0; j < matCols; ++j) {
                 monom = degs[j].first;
-                mat[i][j]
-                    = (((i | (~monom))
-                        & (funcLen-1)) == (funcLen-1));
+                mat[i][j]= (
+                    ((i | (~monom)) & (funcLen-1)) == (funcLen-1)
+                );
             }
         } else {
             std::fill(mat[i].begin(), mat[i].end(), 0);

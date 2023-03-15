@@ -1,11 +1,10 @@
 #include "block.h"
 #include "netcip.h"
-#include "ai.h"
-#include "lin-comb.h"
 
 #include <fstream>
 #include <ios>
 #include <iostream>
+#include <string>
 #include <vector>
 
 #include <numeric>
@@ -23,37 +22,17 @@ double Variance(std::vector<int> v, double average) {
                               - (average * average);
 }
 
-int main()
+int main(int argc, char** argv)
 {
+    if (argc != 2) {
+        std::cout << "netstat-mdp {volume}\n";
+        return 1;
+    }
 
     NetCip::Enc enc;
-    //NetCip::Dec dec;
-    //enc.LoadTable("key");
-    //dec.LoadTable("key");
-    /*
-    std::vector<int> aiValues;
-    std::vector<Block> blockSet(funcLen),
-                       linComb(funcLen);
-    for (Block coef(1); !coef.IsZero(); ++coef) {
-        for (i = 0; i < funcLen; ++i) {
-            blockSet[i] = i;
-            enc.ProcessBlock(blockSet[i]);
-        }
-        LinearCombination(blockSet, linComb, coef);
-        aiValues.push_back(k = AlgebraicImmunity(linComb));
-        std::cout << k << '\n';
-    }
-
-    std::ofstream fp("ai-value.txt");
-    if (fp.is_open()) {
-        for (i = 0, k = aiValues.size(); i < k; ++i)
-            fp << aiValues[i] << '\n';
-    }
-    */
-
 
     // MDP
-    int tkeys = 100;
+    int tkeys = std::atoi(argv[1]);
     std::vector<int> MDPs(tkeys);
     for (int MDP, count, nkeys = 0; nkeys < tkeys; ++nkeys) {
         enc.SetRandomTable();
@@ -80,7 +59,7 @@ int main()
         MDPs[nkeys] = MDP;
     }
 
-    std::ofstream f("mdp.csv", std::ios_base::app);
+    std::ofstream f("netstat-mdp.csv", std::ios_base::app);
 
     f << enc.SUBBLOCKSIZE << ','
       << enc.NUMSUBBLOCKS << ','
