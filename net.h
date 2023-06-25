@@ -2,9 +2,10 @@
 #define NET_H
 
 #include "block.h"
+#include "config.h"
 
 class Network : public Block,
-                public FixedRounds<8>
+                public FixedRounds<__H>
 {
 public:
     Network()

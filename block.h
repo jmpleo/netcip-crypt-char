@@ -3,10 +3,11 @@
 
 #include <cassert>
 
+#include "config.h"
 #include "fixedparam.h"
 #include "types.h"
 
-struct Block : FixedBlockParam <3,3>
+struct Block : FixedBlockParam <__N,__M>
 {
     Block();
     Block(uint64_t);
