@@ -18,9 +18,9 @@ set(MDP_SOURCES key.cpp
                 block.cpp
                 mdp.cpp)
 
-set(__N 4)
-set(__M 4)
-set(__H 16)
+              #set(__N 3)
+              #set(__M 3)
+              #set(__H 9)
 
 
 add_executable(netcip-mdp-${__N}-${__M}-${__H} ${MDP_SOURCES})
