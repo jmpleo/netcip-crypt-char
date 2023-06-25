@@ -1,5 +1,8 @@
-#pragma once
+#ifndef CONFIG_H
+#define CONFIG_H
 
-#define __N @__N@
-#define __M @__M@
-#define __H @__H@
+#define _N @__N@
+#define _M @__M@
+#define _H @__H@
+
+#endif

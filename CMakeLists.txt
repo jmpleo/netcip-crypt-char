@@ -22,6 +22,7 @@ set(MDP_SOURCES key.cpp
               #set(__M 3)
               #set(__H 9)
 
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/config.h)
 
 add_executable(netcip-mdp-${__N}-${__M}-${__H} ${MDP_SOURCES})
 add_executable(netcip-ai-${__N}-${__M}-${__H} ${AI_SOURCES})

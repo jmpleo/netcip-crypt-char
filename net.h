@@ -5,7 +5,7 @@
 #include "config.h"
 
 class Network : public Block,
-                public FixedRounds<__H>
+                public FixedRounds<_H>
 {
 public:
     Network()

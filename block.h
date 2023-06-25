@@ -7,7 +7,7 @@
 #include "fixedparam.h"
 #include "types.h"
 
-struct Block : FixedBlockParam <__N,__M>
+struct Block : FixedBlockParam <_N,_M>
 {
     Block();
     Block(uint64_t);
