@@ -11,16 +11,12 @@ set(AI_SOURCES key.cpp
                lin-comb.cpp
                ai.cpp
                gaus.cpp
-               main.cpp)
+               calc-ai.cpp)
 
 set(MDP_SOURCES key.cpp
                 netcip.cpp
                 block.cpp
-                mdp.cpp)
-
-              #set(__N 3)
-              #set(__M 3)
-              #set(__H 9)
+                calc-mdp.cpp)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/config.h)
 

@@ -10,18 +10,15 @@ struct NetCip
 {
     struct Param : public Table,
                    public Network
-    {
-    };
+    { };
+
     struct Enc : public Transform,
                  public Param
-    {
-        void ProcessBlock(Block &block);
-    };
+    { void ProcessBlock(Block &block); };
+
     struct Dec : public Transform,
                  public Param
-    {
-        void ProcessBlock(Block &block);
-    };
+    { void ProcessBlock(Block &block); };
 };
 
 

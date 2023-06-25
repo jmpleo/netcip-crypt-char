@@ -22,7 +22,7 @@ struct Block : FixedBlockParam <_N,_M>
     Block& operator ^= (const Block& other);
     Block& operator ++ ();
     bool   operator == (const Block& other);
-    operator bool() const { return !IsZero(); }
+           operator bool() const { return !IsZero(); }
 
 private:
     byte subs[NUMSUBBLOCKS];
