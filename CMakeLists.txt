@@ -18,16 +18,10 @@ set(MDP_SOURCES key.cpp
                 block.cpp
                 mdp.cpp)
 
-#add_library(netcip SHARED STATIC ${SOURCE_FILES})
-#add_subdirectory(tests)
+set(__N 4)
+set(__M 4)
+set(__H 16)
 
-add_executable(netcip-mdp ${MDP_SOURCES})
-add_executable(netcip-ai ${AI_SOURCES})
 
-#set(CMAKE_INSTALL_PREFIX  ${PROJECT_SOURCE_DIR})
-#set(LIB_DIR ${PROJECT_SOURCE_DIR}/lib)
-
-#set(INCLUDE_DIR    ${PROJECT_SOURCE_DIR}/include)
-#include_directories(${GRAPH_INCLUDE_DIR})
-
-#install(TARGETS netcip DESTINATION ${LIB_DIR})
+add_executable(netcip-mdp-${__N}-${__M}-${__H} ${MDP_SOURCES})
+add_executable(netcip-ai-${__N}-${__M}-${__H} ${AI_SOURCES})
