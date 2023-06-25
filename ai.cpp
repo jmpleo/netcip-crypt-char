@@ -1,7 +1,7 @@
 
 #include "ai.h"
 #include "gaus.h"
-/*
+
 int AlgebraicImmunity(const std::vector<Block> &blockSet)
 {
     uint64_t i, k, s, funcLen = blockSet.size();
@@ -18,7 +18,7 @@ int AlgebraicImmunity(const std::vector<Block> &blockSet)
     s = FirstDepend(matrix);
     return degs[k < s ? k : s].second;
 }
-*/
+
 int AlgebraicImmunity(const std::vector<bool> &func)
 {
     uint64_t i, k, s, funcLen = func.size();

@@ -57,9 +57,9 @@ uint64_t FirstDepend(bool_mat &mat)
              rowCount = mat.size(),
              colCount = rowCount >> 1;
     int* index = new int[colCount];
+
     for (col = 0; col < colCount; ++col) {
-        for (row = start; row < rowCount && !mat[row][col]; ++row) {
-        }
+        for (row = start; row < rowCount && !mat[row][col]; ++row) {}
         if (row < rowCount) {
             if (row != start) {
                 std::swap(mat[row], mat[start]);
@@ -83,7 +83,7 @@ uint64_t FirstDepend(bool_mat &mat)
             ++start;
         }
         else {
-            std::cout << "DEBUG\n";
+            //std::cout << "DEBUG\n";
             colCount = col;
             break;
         }

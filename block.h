@@ -6,7 +6,7 @@
 #include "fixedparam.h"
 #include "types.h"
 
-struct Block : FixedBlockParam<4,2>
+struct Block : FixedBlockParam <3,3>
 {
     Block();
     Block(uint64_t);
@@ -18,9 +18,9 @@ struct Block : FixedBlockParam<4,2>
     Block& operator =  (uint64_t num);
     Block& operator =  (const Block& other);
     Block& operator &= (const Block& other);
-    Block& operator ++ ();
     Block& operator ^= (const Block& other);
-    bool operator == (const Block& other);
+    Block& operator ++ ();
+    bool   operator == (const Block& other);
     operator bool() const { return !IsZero(); }
 
 private:

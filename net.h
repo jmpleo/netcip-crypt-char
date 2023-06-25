@@ -4,7 +4,7 @@
 #include "block.h"
 
 class Network : public Block,
-                public FixedRounds<6>
+                public FixedRounds<8>
 {
 public:
     Network()
