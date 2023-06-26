@@ -1,3 +1,6 @@
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
 # Computing cryptographic characteristics for generalized Feistel network -based cipher
 
 1. Algebraic Immunity
@@ -6,9 +9,8 @@
 ### Specification cipher
 
 1 Round. Round function $F$ - bijective in the second variable,
-$$
-F:\Z_2^n\times\Z_2^n\to \Z_2^n,\  \omega_i \in \Z_2^n\ (or\ \Z_{2^n})
-$$
+
+$F:Z_2^n \times Z_2^n\to Z_2^n,\  \omega_i \in Z_2^n\ (or\ Z_{2^n})$
 
 
 <img src="img/round.png" alt="round" style="zoom:85%;" />
