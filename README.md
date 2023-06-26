@@ -21,15 +21,19 @@ Example Network for 7 Rounds: ($m=4,\ h=7$)
 
 ### Build
 
-You need `cmake` to build this porject.
+1. You need `cmake` to build this porject.
 
-1. One-build configuration (to ./build)
+   ```bash
+   cmake -S . -B build
+   ```
+
+2. One-build configuration (to ./build)
 
    ```bash
    ./build.sh <N> <M> <H>
    ```
 
-2. More configuration
+3. More configuration
 
    ```bash
    # change parameters range and run
