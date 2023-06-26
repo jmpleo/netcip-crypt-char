@@ -1,4 +1,3 @@
 tests
 build
-main.cpp
-
+config.h
