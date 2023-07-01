@@ -14,8 +14,7 @@ void FormingMatrix(bool_mat &mat,
                    std::vector<std::pair<uint64_t,
                                          int>> &degs, bool negFunc)
 {
-    uint64_t i, j,
-             monom,
+    uint64_t i, j, monom,
              funcLen = func.size(),
              matCols = funcLen >> 1;
     for (i = 0; i < funcLen; ++i) {
@@ -44,11 +43,12 @@ void MonomsDeg(std::vector<std::pair<uint64_t,int>> &deg)
             deg[k + 1] = {k + 1, deg[k + 1 - i].second + 1};
         }
     }
-    std::stable_sort(deg.begin(),
-                     deg.end(),
-                     [](std::pair<uint64_t, int> a, std::pair<int, int> b)
-                     { return a.second < b.second;}
-                     );
+    std::stable_sort(
+      deg.begin(),
+      deg.end(),
+      [] (std::pair<uint64_t, int> a, std::pair<int, int> b)
+      { return a.second < b.second; }
+    );
 }
 uint64_t FirstDepend(bool_mat &mat)
 {
