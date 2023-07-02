@@ -24,17 +24,25 @@ Example Network for 7 Rounds: ($m=4,\ h=7$)
 1. You need `cmake` to build this porject.
 
    ```bash
+   cd netcip-crypt-char
    cmake -S . -B build
    ```
 
 2. One-build configuration (to ./build)
 
+   Linux:
    ```bash
    ./build.sh <N> <M> <H>
    ```
+   Windows:
+   ```powershell
+   cmake . -D__N=<N> -D__M=<M> -D__H=<H>
+   cmake --build build
+   ``` 
 
-3. More configuration
+4. More configuration
 
+   Linux:
    ```bash
    # change parameters range and run
    ./brut-build.sh
