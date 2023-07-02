@@ -6,18 +6,24 @@
 
 ### Specification cipher
 
-1 Round. Round function $F$ - bijective in the second variable,
+Round function $F$ - bijective in the second variable,
 
 $F:Z_2^n \times Z_2^n\to Z_2^n,\  \omega_i \in Z_2^n\ (or\ Z_{2^n})$
 
+Round transformation: $R:Z_2^{mn} \to Z_2^{mn}$
+
+$R(\omega_1,...,\omega_m)=(\omega_1,...,\omega_{s-1},F(\omega_l,\omega_s),\omega_{s+1},...,\omega_m)$ 
 
 <img src="img/round.png" alt="round" style="zoom:85%;" />
 
-Cipher parameters: $n, m, h$, where $h$ - number of rounds (or *height*). $F$ - secret key
+Cipher parameters: $n, m, h$, where $h$ - number of rounds (or *height*). 
+Network (sequence of pairs ($l$, $s$)) - also public parameter. The key is $F$.
 
 Example Network for 7 Rounds: ($m=4,\ h=7$)
 
 <img src="img/example.png" alt="example" style="zoom:80%;" />
+
+This work considers networks only $(s_0, s_1), (s_1, s_2),..., (s_{i\ mod(m)}, s_{i+1\ mod(m)}),... $
 
 ### Build
 
