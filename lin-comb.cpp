@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <memory.h>
+#include <vector>
 
 void LinearCombination(std::vector<Block> &source,
                        std::vector<Block> &dest,
