@@ -9,7 +9,7 @@ int AlgebraicImmunity(const std::vector<Block> &blockSet)
     static bool_mat matrix(funcLen, bool_vec(funcLen >> 1, 0));
     static bool_vec f(funcLen);
     for (i = 0; i < funcLen; ++i) {
-        f[i] = !(blockSet[i].IsZero());
+        f[i] = static_cast<bool>(blockSet[i]);
     }
     MonomsDeg(degs);
     FormingMatrix(matrix, f, degs);
