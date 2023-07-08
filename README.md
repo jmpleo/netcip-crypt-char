@@ -3,16 +3,17 @@
 
 1. Algebraic Immunity
 2. Max Differential Probability
+3. Non-Linearity
 
 ### Cipher Specification
 
 Function $F$ - bijective in the second variable,
 
-$F:Z_2^n \times Z_2^n\to Z_2^n,\  \omega_i \in Z_2^n\ (or\ Z_{2^n})$
+$F:Z_2^n \times Z_2^n\to Z_2^n,\$
 
 Round transformation: $R:Z_2^{mn} \to Z_2^{mn}$ as
 
-$R(\omega_1,...,\omega_m)=(\omega_1,...,\omega_{s-1},F(\omega_l,\omega_s),\omega_{s+1},...,\omega_m)$ 
+$R(\omega_1,...,\omega_m)=(\omega_1,...,\omega_{s-1},F(\omega_l,\omega_s),\omega_{s+1},...,\omega_m)  \omega_i \in Z_2^n\ (or\ Z_{2^n}) $ 
 
 <img src="img/round.png" alt="round" style="zoom:85%;" />
 
@@ -56,8 +57,9 @@ This work considers networks only $(s_0, s_1), (s_1, s_2),..., (s_{i\ mod(m)}, s
 
 ### Run Computing
 
+For example, NL-computing:
 ```bash
-cd build
-./netcip-<N>-<M>-<H>
-# saving in netstat-<N>-<M>-<H>.csv
+cd stat
+../build/netcip-nl-<N>-<M>-<H>
+# saving in ./netstat-nl-<N>-<M>-<H>.csv
 ```
