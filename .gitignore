@@ -2,3 +2,4 @@ test
 build
 config.h
 main.cpp
+.*
