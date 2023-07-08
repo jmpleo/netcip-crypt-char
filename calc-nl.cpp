@@ -43,7 +43,7 @@ int main(int argc, char** argv)
             }
             LinearCombination(blockSet, linComb, coef);
             nl = NL(linComb);
-            if (nl << min_nl) {
+            if (nl < min_nl) {
               min_nl = nl;
             }
             //nlValues.push_back(nl);
