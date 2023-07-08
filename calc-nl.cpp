@@ -4,6 +4,7 @@
 #include "lin-comb.h"
 
 #include <algorithm>
+#include <cmath>
 #include <cstdint>
 #include <fstream>
 #include <ios>
@@ -22,25 +23,30 @@ int main(int argc, char** argv)
 
     NetCip::Enc enc;
 
-    int funcLen = (1 << (enc.SUBBLOCKSIZE * enc.NUMSUBBLOCKS));
+    uint64_t funcLen = (1ULL << (enc.SUBBLOCKSIZE * enc.NUMSUBBLOCKS));
 
-    int tkeys = std::atoi(argv[1]);
+    uint64_t totalKeys = std::stoull(argv[1]);
 
-    std::vector<uint64_t> nlValues;
+    //std::vector<uint64_t> nlValues(funcLen);
     std::vector<Block> blockSet(funcLen),
                        linComb(funcLen);
-    for (int nl, i,
-             count,
-             nkeys = 0; nkeys < tkeys; ++nkeys) {
-        enc.SetRandomTable();
 
+    for (uint64_t nl, i, min_nl = INT64_MAX,
+            nKey = 0; nKey < totalKeys; ++nKey
+    ) {
+        //nlValues.clear();
+        enc.SetRandomTable();
         for (Block coef(1); !coef.IsZero(); ++coef) {
             for (i = 0; i < funcLen; ++i) {
                 blockSet[i] = i;
                 enc.ProcessBlock(blockSet[i]);
             }
             LinearCombination(blockSet, linComb, coef);
-            nlValues.push_back(nl = NL(linComb));
+            nl = NL(linComb);
+            if (nl << min_nl) {
+              min_nl = nl;
+            }
+            //nlValues.push_back(nl);
         }
 
         std::ofstream f(
@@ -50,9 +56,10 @@ int main(int argc, char** argv)
             std::ios_base::app
         );
 
-        f << *std::min_element(nlValues.begin(), nlValues.end()) << std::endl;
+        //f << *std::min_element(nlValues.begin(), nlValues.end()) << std::endl;
+        f << min_nl << std::endl;
 
-        std::cout << "\rprogress: " << nkeys << "/" << tkeys;
+        std::cout << "\rprogress: " << nKey << "/" << totalKeys;
         std::cout.flush();
     }
     return 0;

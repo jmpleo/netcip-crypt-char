@@ -1,6 +1,7 @@
 #include "block.h"
 #include "netcip.h"
 
+#include <cstdint>
 #include <fstream>
 #include <ios>
 #include <iostream>
@@ -18,11 +19,11 @@ int main(int argc, char** argv)
     NetCip::Enc enc;
 
     // MDP
-    int tkeys = std::atoi(argv[1]);
-    std::vector<int> MDPs(tkeys);
-    for (int MDP,
-            count,
-            nkeys = 0; nkeys < tkeys; ++nkeys) {
+    uint64_t totalKeys = std::stoull(argv[1]);
+    //std::vector<uint64_t> MDPs(totalKeys);
+    for (uint64_t MDP, count,
+            nKey = 0; nKey < totalKeys; ++nKey
+    ) {
         enc.SetRandomTable();
         MDP = 0;
         for (Block a(1), b, x, dx, df; !a.IsZero(); ++a) {
@@ -45,7 +46,7 @@ int main(int argc, char** argv)
                 }
             }
         }
-        MDPs[nkeys] = MDP;
+        //MDPs[nKey] = MDP;
 
         std::ofstream f(
             "netstat_mdp_" + std::to_string(enc.SUBBLOCKSIZE) +
@@ -55,7 +56,7 @@ int main(int argc, char** argv)
         );
         f << MDP << std::endl;
 
-        std::cout << "\rprogress: " << nkeys << "/" << tkeys;
+        std::cout << "\rprogress: " << nKey << "/" << totalKeys;
         std::cout.flush();
     }
 
