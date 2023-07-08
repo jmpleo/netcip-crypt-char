@@ -2,6 +2,7 @@
 #define BLOCK_H
 
 #include <cassert>
+#include <vector>
 
 #include "config.h"
 #include "fixedparam.h"
@@ -24,6 +25,7 @@ struct Block : FixedBlockParam <_N,_M>
     bool   operator == (const Block& other);
            operator bool() const { return !IsZero(); }
 
+    static std::vector<bool> ToBoolFunc(const std::vector<Block> &blockSet);
 private:
     byte subs[NUMSUBBLOCKS];
 };
