@@ -31,10 +31,11 @@ int main(int argc, char** argv)
     std::vector<Block> blockSet(funcLen),
                        linComb(funcLen);
 
-    for (uint64_t nl, i, min_nl = INT64_MAX,
+    for (uint64_t nl, i, min_nl,
             nKey = 0; nKey < totalKeys; ++nKey
     ) {
         //nlValues.clear();
+        min_nl = INT64_MAX;
         enc.SetRandomTable();
         for (Block coef(1); !coef.IsZero(); ++coef) {
             for (i = 0; i < funcLen; ++i) {
