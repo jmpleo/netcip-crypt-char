@@ -54,4 +54,11 @@ for filename in os.listdir('.'):
 
 for char, result in results.items():
     for field in result:
-        results[char][field].fillna('-').to_csv(f"report-{char}-{field}.csv")
+        df = results[char][field].fillna('-')
+        df[
+            df.nunique(axis=1) > 1
+        ].loc[
+            :,df.nunique(axis=0) > 1
+        ].to_csv(
+            f"report-{char}-{field}.csv"
+        )
