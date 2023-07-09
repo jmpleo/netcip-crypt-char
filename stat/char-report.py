@@ -45,8 +45,7 @@ for filename in os.listdir('.'):
         results[char]["count"][(n,m)].loc[h] = df.count()[0]
         results[char]["mean"][(n,m)].loc[h] = df.mean()[0]
         results[char]["std"][(n,m)].loc[h] = df.std()[0]
-        #print(f"char = {char}, max_char = {max_char}, (n,m,h) = ({n,m,h})")
-        results[char]["summary"][(n,m)].loc[h] = "{:.2f} ± {:.2f} % ({})".format(
+        results[char]["summary"][(n,m)].loc[h] = "{:.2f} ± {:.2f} ({})".format(
             df.mean()[0] / max_char * 100,
             df.std()[0] / max_char * 100,
             df.count()[0]
@@ -55,10 +54,6 @@ for filename in os.listdir('.'):
 for char, result in results.items():
     for field in result:
         df = results[char][field].fillna('-')
-        df[
-            df.nunique(axis=1) > 1
-        ].loc[
-            :,df.nunique(axis=0) > 1
-        ].to_csv(
+        df[df.nunique(axis=1) > 1].loc[:,df.nunique(axis=0) > 1 ].to_csv(
             f"report-{char}-{field}.csv"
         )
