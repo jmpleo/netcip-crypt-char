@@ -31,11 +31,8 @@ results = {
 for filename in os.listdir('.'):
     if re.match(r'^netstat_(ai|mdp|nl)_(\d+)_(\d+)_(\d+).csv$', filename):
         df = pd.read_csv(f"{filename}", header=None)
-        
         n, m, h = tuple(map(int, re.findall(r'\d+', filename)))
-        
         char = re.findall(r'^netstat_(.*?)_', filename)[0]
-        
         if char == "ai":
             max_char = ((m*n)//2) + ((m*n)%2)
         elif char == "nl":
@@ -45,7 +42,7 @@ for filename in os.listdir('.'):
         else:
             raise Exception(f"NOTE: {filename} contains unknow char")
 
-        results[char]["count"][(n,m)].loc[h] = df.count()[0]    
+        results[char]["count"][(n,m)].loc[h] = df.count()[0]
         results[char]["mean"][(n,m)].loc[h] = df.mean()[0]
         results[char]["std"][(n,m)].loc[h] = df.std()[0]
         #print(f"char = {char}, max_char = {max_char}, (n,m,h) = ({n,m,h})")
