@@ -4,7 +4,7 @@ import re
 
 axis = {
     "index" : range(2,41),
-    "columns" : [(n,m) for n in range(2,6) for m in range(2,6) if n*m <= 16]
+    "columns" : [(n,m) for n in range(2,6) for m in range(2,6) if n*m <= 16 and n*m > 4]
 }
 
 results = {
