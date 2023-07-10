@@ -31,12 +31,10 @@ int main(int argc, char** argv)
                 count = 0;
                 x = 0;
                 do {
-                    dx = x;
-                    df = x;
-                    dx ^= a;
-                    enc.ProcessBlock(dx); // after: dx = F(x+a)
-                    enc.ProcessBlock(df); // after: df = F(x)
-                    if ((df ^= dx) == b) {
+                    dx = x; df = x; dx ^= a;
+                    enc.ProcessBlock(dx);  // after: dx = E(x+a)
+                    enc.ProcessBlock(df);  // after: df = E(x)
+                    if ((df ^= dx) == b) { // E(x+a) + E(x) == b
                         ++count;
                     }
                     ++x;

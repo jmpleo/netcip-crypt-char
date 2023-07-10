@@ -10,12 +10,12 @@ class Network : public Block,
 public:
     Network()
     {
-        for (unsigned int i = 0; i < ROUNDS; ++i) {
-            net_[i] = i % NUMSUBBLOCKS;
+        for (unsigned int i = 0; i < FixedRounds::ROUNDS; ++i) {
+            net_[i] = i % Block::NUMSUBBLOCKS;
         }
     }
 protected:
-    unsigned int net_[ROUNDS];
+    unsigned int net_[FixedRounds::ROUNDS];
 };
 
 #endif

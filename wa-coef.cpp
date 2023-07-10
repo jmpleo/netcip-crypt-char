@@ -7,7 +7,8 @@
 #include <vector>
 
 
-void FFT(int64_t* vec, uint64_t len)
+// discrete Fourier transform
+void FFT ( int64_t* vec, uint64_t len )
 {
     if (len /= 2) {
         for (uint64_t i = 0; i < len; ++i) {
@@ -20,7 +21,14 @@ void FFT(int64_t* vec, uint64_t len)
     }
 }
 
-std::vector<int64_t> WACoef(const bool_vec &func)
+
+/*
+ * Walsh spectrum for expand functions (-1^f)
+ * of Coeficients of Walsh-Hadamard the 2nd kind
+ *
+ * -1^f(x) = 2^(-k) * sum_a[ W(a) * -1^<a,x>  ]
+ */
+std::vector<int64_t> WACoef ( const bool_vec &func )
 {
   std::vector<int64_t> coef(func.size());
   for (uint64_t i = 0, n = coef.size(); i < n; ++i) {
@@ -30,7 +38,7 @@ std::vector<int64_t> WACoef(const bool_vec &func)
   return coef;
 }
 
-std::vector<int64_t> WACoef(const std::vector<Block> &blockSetAsBoolFunc)
+std::vector<int64_t> WACoef ( const std::vector<Block> &blockSetAsBoolFunc )
 {
   std::vector<int64_t> coef(blockSetAsBoolFunc.size());
   for (uint64_t i = 0, n = coef.size(); i < n; ++i) {
