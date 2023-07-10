@@ -5,7 +5,7 @@
 
 int AlgebraicImmunity ( const std::vector<Block> &blockSet )
 {
-    uint64_t i, minDegAnnF, minDegAnnNotF, funcLen = blockSet.size();
+    uint64_t i, numMonomMaxDegAnnF, numMonomMaxDegAnnNegF, funcLen = blockSet.size();
     static std::vector<monom_and_deg> monoms(funcLen);
     static bool_mat matrix(funcLen, bool_vec(funcLen >> 1, 0));
     static bool_vec f(funcLen);
@@ -36,19 +36,19 @@ int AlgebraicImmunity ( const std::vector<Block> &blockSet )
     //
     // moreover, the monoms are ordered by degrees in the matrix
     // so deg annulator g is smallest
-    minDegAnnF = FirstDependColumn(matrix);
+    numMonomMaxDegAnnF = FirstDependColumn(matrix);
 
     // the same for ~f - inverse function
     FormingMatrix(matrix, f, monoms, true);
-    minDegAnnNotF = FirstDependColumn(matrix);
+    numMonomMaxDegAnnNegF = FirstDependColumn(matrix);
 
-    #define MINDEG(a,b) (a < b ? a : b)
-    return monoms[MINDEG(minDegAnnF, minDegAnnNotF)].second;
+    #define MIN(a,b) (a < b ? a : b)
+    return monoms[MIN(numMonomMaxDegAnnF, numMonomMaxDegAnnNegF)].second;
 }
 
 int AlgebraicImmunity ( const bool_vec &f )
 {
-    uint64_t i, minDegAnnF, minDegAnnNotF, funcLen = f.size();
+    uint64_t i, numMonomMaxDegAnnF, numMonomMaxDegAnnNegF, funcLen = f.size();
     static std::vector<monom_and_deg> monoms(funcLen);
     static bool_mat matrix(funcLen, bool_vec(funcLen >> 1, 0));
 
@@ -77,12 +77,12 @@ int AlgebraicImmunity ( const bool_vec &f )
     //
     // moreover, the monoms are ordered by degrees in the matrix
     // so deg annulator g is smallest
-    minDegAnnF = FirstDependColumn(matrix);
+    numMonomMaxDegAnnF = FirstDependColumn(matrix);
 
     // the same for ~f - inverse function
     FormingMatrix(matrix, f, monoms, true);
-    minDegAnnNotF = FirstDependColumn(matrix);
+    numMonomMaxDegAnnNegF = FirstDependColumn(matrix);
 
-    #define MINDEG(a,b) (a < b ? a : b)
-    return monoms[MINDEG(minDegAnnF, minDegAnnNotF)].second;
+    #define MIN(a,b) (a < b ? a : b)
+    return monoms[MIN(numMonomMaxDegAnnF, numMonomMaxDegAnnNegF)].second;
 }
