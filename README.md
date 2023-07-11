@@ -26,13 +26,6 @@ Example Network for 7 Rounds: $m=4,\ h=7$, and network $N=(1,2),(2,4),(4,3),(3,1
 2. An equally probable choice of $F$ with the return from the set of all matrices whose rows are permutations (the cardinality of such a set is $(2^{n}!)^{2^{n}} \sim 2^{n2^{2n}}$).
 3. Calculate MDP, AI, NL.
 
-$\text{MDP} = \max_{\alpha\ne0,\ \beta}\{ \mathbb{P}_x\{\Phi^F_N(x \oplus \alpha)\oplus \Phi^F_N(x)=\beta\} \}$
-
-$\text{AI}=\min_{g\ne \mathbb{0},\ \alpha\ne0,\ \alpha_0}\{ \text{deg}(g):\ (\alpha_0 \oplus<\alpha, \Phi^F_N>)\cdot g =\mathbb{0} \}, where \Phi^F_N = (f_1,...f_{2^{nm}}),\  <\alpha, \Phi^F_N>= f_1\alpha_1 \oplus...\oplus  f_{2^{nm}}\alpha_{2^{nm}}$
-
-$\text{NL} = \min_{\alpha\ne0}{\{2^{nm-1}-\frac{1}{2}|\max_{\beta}{W^{<\alpha,\Phi_N^F>}(\beta)}|\}},$
-where $W^f(\alpha)$ - Walsh-Hadamard spectrum for f
-
 ### Build
 
 1. You need `cmake` to build this porject.
