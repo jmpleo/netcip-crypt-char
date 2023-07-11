@@ -38,14 +38,23 @@ int main(int argc, char** argv)
         min_ai = INT64_MAX;
         enc.SetRandomTable();
         for (Block coef(1); !coef.IsZero(); ++coef) {
+
+            // blockSet[...] is set of value coordinate functions of Enc()
+            // where blockSet[x] = (f_1(x), f_2(x), ...,f_nm(x))
+            // moreover, x=x_1x_2..x_nm ordered by lexicographic
             for (i = 0; i < funcLen; ++i) {
                 blockSet[i] = i;
                 enc.ProcessBlock(blockSet[i]);
             }
+
+            // for each x=x_1x_2...x_nm and coef=c_1c_2...c_nm
+            // linComb[x] = (f_1(x) & c_1) ^ ... ^ (f_nm(x) & c_nm)
+            // then you can linComb[x] (is a Block) cast to bool,
+            // so linComb using as "bool_vec" (bool function)
             LinearCombination(blockSet, linComb, coef);
             ai = AlgebraicImmunity(linComb);
             if (ai < min_ai) {
-              min_ai = ai;
+               min_ai = ai;
             }
             //aiValues.push_back(ai);
         }
