@@ -93,7 +93,7 @@ uint64_t FirstDependColumn ( bool_mat &mat )
             ++start;
         }
         else {
-            // number col of first rows-depend
+            // number col of first cols-depend
             colCount = col;
             break;
         }
