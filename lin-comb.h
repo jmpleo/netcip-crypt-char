@@ -5,8 +5,8 @@
 
 #include <memory.h>
 
-void LinearCombination(std::vector<Block> &source,
-                       std::vector<Block> &dest,
-                       Block & coef);
+void LinearCombination( std::vector<Block> &source,
+                        std::vector<Block> &dest,
+                        Block & coef );
 
 #endif
