@@ -1,6 +1,7 @@
 #ifndef FIXEDPARAM_H
 #define FIXEDPARAM_H
 
+
 template <unsigned int N, unsigned int M>
 struct FixedBlockParam
 {

@@ -8,6 +8,11 @@
 #include "fixedparam.h"
 #include "types.h"
 
+/*
+ * Class of block intended for various configuration transformition
+ *
+ * NOTE: Do not use this class for application cipher - use byte arr
+ */
 struct Block : FixedBlockParam <_N,_M>
 {
     Block();
@@ -25,9 +30,9 @@ struct Block : FixedBlockParam <_N,_M>
     bool   operator == (const Block& other);
            operator bool() const { return !IsZero(); }
 
-    static std::vector<bool> ToBoolFunc(const std::vector<Block> &blockSet);
+    static bool_vec ToBoolFunc(const std::vector<Block> &blockSet);
 private:
-    byte subs[NUMSUBBLOCKS];
+    byte subs[FixedBlockParam::NUMSUBBLOCKS];
 };
 struct Transform
 {
