@@ -1,30 +1,37 @@
 
-# Computing cryptographic characteristics for generalized Feistel network -based cipher
-
-1. Algebraic Immunity
-2. Max Differential Probability
-3. Non-Linearity
+# Calculation of cryptographic characteristics for a cipher based on a generalized Feistel network
 
 ### Cipher Specification
 
-Function $F$ - bijective in the second variable,
+$F:Z_2^n \times Z_2^n\to Z_2^n$ - bijective in the second variable function. $\omega_i \in Z_2^n\ (Z_{2^n})$ - words.
 
-$F:Z_2^n \times Z_2^n\to Z_2^n,\$
+Round transformition $R^F[l,s]:Z_2^{mn} \to Z_2^{mn} $:
 
-Round transformation: $R:Z_2^{mn} \to Z_2^{mn}$ as
-
-$R(\omega_1,...,\omega_m)=(\omega_1,...,\omega_{s-1},F(\omega_l,\omega_s),\omega_{s+1},...,\omega_m)  \omega_i \in Z_2^n\ (or\ Z_{2^n}) $ 
+$R^F [l,s] (\omega_1,...,\omega_m)=(\omega_1,...,\omega_{s-1},F(\omega_l,\omega_s),\omega_{s+1},...,\omega_m) $
 
 <img src="img/round.png" alt="round" style="zoom:85%;" />
 
-Cipher parameters: $n, m, h$, where $h$ - number of rounds (or *height*). 
-Network (sequence of pairs ($l$, $s$)) - also public parameter. The key is $F$ (tipical size $n$ - byte, so $n=8 $).
+The composition $R^F[l_1,s_1]R^F[l_2,s_2]...R^F[l_h,s_h]$ implements substitution on the $nm$-bit block: $\Phi^F_N : Z_2^{nm}\to Z_2^{nm}$
+
+Subtitution parameters: $n, m, h$, where $h$ - number of rounds (or *height*). 
+Network (sequence of pairs ($l$, $s$)) - also public parameter. The secret parameter is $F$ (tipical size $n$ - byte, so $n=8 $).
 
 Example Network for 7 Rounds: $m=4,\ h=7$, and network $N=(1,2),(2,4),(4,3),(3,1),(1,2),(2,1),(1,4) $
 
 <img src="img/example.png" alt="example" style="zoom:80%;" />
 
-This work considers networks only $(s_0, s_1), (s_1, s_2),..., (s_{i\ mod(m)}, s_{i+1\ mod(m)}),... = (1,2),(2,3),(3,4),... $
+### Experiment
+
+1. This work considers networks only $(s_0, s_1), (s_1, s_2),..., (s_{i\ mod(m)}, s_{i+1\ mod(m)}),... = (1,2),(2,3),(3,4),... $
+2. An equally probable choice of $F$ with the return from the set of all matrices whose rows are permutations (the cardinality of such a set is $(2^{n}!)^{2^{n}} \sim 2^{n2^{2n}}$).
+3. Calculate MDP, AI, NL.
+
+$\text{MDP} = \max_{\alpha\ne0,\ \beta}\{ \mathbb{P}_x\{\Phi^F_N(x \oplus \alpha)\oplus \Phi^F_N(x)=\beta\} \}$
+
+$\text{AI}=\min_{g\ne \mathbb{0},\ \alpha\ne0,\ \alpha_0}\{ \text{deg}(g):\ (\alpha_0 \oplus<\alpha, \Phi^F_N>)\cdot g =\mathbb{0} \}, where \Phi^F_N = (f_1,...f_{2^{nm}}),\  <\alpha, \Phi^F_N>= f_1\alpha_1 \oplus...\oplus  f_{2^{nm}}\alpha_{2^{nm}}$
+
+$\text{NL} = \min_{\alpha\ne0}{\{2^{nm-1}-\frac{1}{2}|\max_{\beta}{W^{<\alpha,\Phi_N^F>}(\beta)}|\}},$
+where $W^f(\alpha)$ - Walsh-Hadamard spectrum for f
 
 ### Build
 
