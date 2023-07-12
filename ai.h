@@ -7,6 +7,6 @@
 
 int AlgebraicImmunity(const std::vector<Block> &blockSet);
 
-int AlgebraicImmunity(const std::vector<bool> &func);
+int AlgebraicImmunity(const bool_vec &func);
 
 #endif

@@ -1,13 +1,17 @@
 #include "block.h"
 #include "netcip.h"
+#include "progbar.h"
 
 #include <cstdint>
+
 #include <fstream>
 #include <ios>
 #include <iostream>
 #include <ostream>
+
 #include <string>
 #include <vector>
+
 
 int main(int argc, char** argv)
 {
@@ -16,31 +20,30 @@ int main(int argc, char** argv)
         return 1;
     }
 
+    ProgressBar<80> progbar;
     NetCip::Enc enc;
 
-    // MDP
-    uint64_t totalKeys = std::stoull(argv[1]);
+    uint64_t MDP, xCount, nKey,
+             totalKeys = std::stoull(argv[1]);
     //std::vector<uint64_t> MDPs(totalKeys);
-    for (uint64_t MDP, count,
-            nKey = 0; nKey < totalKeys; ++nKey
-    ) {
+    for (nKey = 0; nKey < totalKeys; ++nKey) {
         enc.SetRandomTable();
         MDP = 0;
         for (Block a(1), b, x, dx, df; !a.IsZero(); ++a) {
             for (b = 1; !b.IsZero(); ++b) {
-                count = 0;
+                xCount = 0;
                 x = 0;
                 do {
                     dx = x; df = x; dx ^= a;
                     enc.ProcessBlock(dx);  // after: dx = E(x+a)
                     enc.ProcessBlock(df);  // after: df = E(x)
                     if ((df ^= dx) == b) { // E(x+a) + E(x) == b
-                        ++count;
+                        ++xCount;
                     }
                     ++x;
                 } while (!x.IsZero());
-                if (count > MDP) {
-                    MDP = count;
+                if (xCount > MDP) {
+                    MDP = xCount;
                 }
             }
         }
@@ -53,10 +56,7 @@ int main(int argc, char** argv)
             std::ios_base::app
         );
         f << MDP << std::endl;
-
-        std::cout << "\rprogress: " << nKey << "/" << totalKeys;
-        std::cout.flush();
-    }
-
-        return 0;
+        progbar.Show(static_cast<float>(nKey) / totalKeys, std::cout);
+    } std::cout << std::endl;
+    return 0;
 }

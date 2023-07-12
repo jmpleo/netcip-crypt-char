@@ -2,17 +2,22 @@
 #include "netcip.h"
 #include "ai.h"
 #include "lin-comb.h"
+#include "progbar.h"
 
-#include <algorithm>
-#include <cmath>
 #include <cstdint>
+
+#include <cstdio>
 #include <fstream>
 #include <ios>
 #include <iostream>
+
 #include <string>
 #include <vector>
 
 #include <numeric>
+#include <algorithm>
+#include <cmath>
+
 
 int main(int argc, char** argv)
 {
@@ -21,30 +26,31 @@ int main(int argc, char** argv)
         return 1;
     }
 
+    ProgressBar<80> progbar;
     NetCip::Enc enc;
 
-    uint64_t funcLen = (1ULL << (enc.SUBBLOCKSIZE * enc.NUMSUBBLOCKS));
-
-    uint64_t totalKeys = std::stoull(argv[1]);
+    char progressBar[101]; progressBar[100] = 0;
+    float progress;
+    uint64_t ai, x, minAI, nKey,
+             funcLen = (1ULL << (enc.SUBBLOCKSIZE * enc.NUMSUBBLOCKS)),
+             totalKeys = std::stoull(argv[1]);
 
     //std::vector<uint64_t> aiValues(funcLen);
     std::vector<Block> blockSet(funcLen),
                        linComb(funcLen);
 
-    for (uint64_t ai, i, min_ai,
-            nKey = 0; nKey < totalKeys; ++nKey
-    ) {
+    for (nKey = 0; nKey < totalKeys; ++nKey) {
         //aiValues.clear();
-        min_ai = INT64_MAX;
+        minAI = INT64_MAX;
         enc.SetRandomTable();
         for (Block coef(1); !coef.IsZero(); ++coef) {
 
             // blockSet[...] is set of value coordinate functions of Enc()
             // where blockSet[x] = (f_1(x), f_2(x), ...,f_nm(x))
             // moreover, x=x_1x_2..x_nm ordered by lexicographic
-            for (i = 0; i < funcLen; ++i) {
-                blockSet[i] = i;
-                enc.ProcessBlock(blockSet[i]);
+            for (x = 0; x < funcLen; ++x) {
+                blockSet[x] = x;
+                enc.ProcessBlock(blockSet[x]);
             }
 
             // for each x=x_1x_2...x_nm and coef=c_1c_2...c_nm
@@ -52,9 +58,8 @@ int main(int argc, char** argv)
             // then you can linComb[x] (is a Block) cast to bool,
             // so linComb using as "bool_vec" (bool function)
             LinearCombination(blockSet, linComb, coef);
-            ai = AlgebraicImmunity(linComb);
-            if (ai < min_ai) {
-               min_ai = ai;
+            if (ai = AlgebraicImmunity(linComb), ai < minAI) {
+               minAI = ai;
             }
             //aiValues.push_back(ai);
         }
@@ -67,10 +72,12 @@ int main(int argc, char** argv)
         );
 
         //f << *std::min_element(aiValues.begin(), aiValues.end()) << std::endl;
-        f << min_ai << std::endl;
 
-        std::cout << "\rprogress: " << nKey << "/" << totalKeys;
-        std::cout.flush();
-    }
+        f << minAI << std::endl;
+        progbar.Show(static_cast<float>(nKey) / totalKeys, std::cout);
+
+        //std::cout << "\rAI: " <<  minAI << " progress: " << nKey + 1 << "/" << totalKeys;
+        //std::cout.flush();
+    } std::cout << std::endl;
     return 0;
 }

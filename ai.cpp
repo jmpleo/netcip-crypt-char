@@ -35,7 +35,7 @@ int AlgebraicImmunity ( const std::vector<Block> &blockSet )
     // f & g = 0
     //
     // moreover, the monoms are ordered by degrees in the matrix
-    // so deg annulator g is smallest
+    // so deg annihilator g is smallest
     numMonomMaxDegAnnF = FirstDependColumn(matrix);
 
     // the same for ~f - inverse function
@@ -48,7 +48,7 @@ int AlgebraicImmunity ( const std::vector<Block> &blockSet )
 
 int AlgebraicImmunity ( const bool_vec &f )
 {
-    uint64_t i, numMonomMaxDegAnnF, numMonomMaxDegAnnNegF, funcLen = f.size();
+    uint64_t numMonomMaxDegAnnF, numMonomMaxDegAnnNegF, funcLen = f.size();
     static std::vector<monom_and_deg> monoms(funcLen);
     static bool_mat matrix(funcLen, bool_vec(funcLen >> 1, 0));
 
@@ -76,7 +76,7 @@ int AlgebraicImmunity ( const bool_vec &f )
     // f & g = 0
     //
     // moreover, the monoms are ordered by degrees in the matrix
-    // so deg annulator g is smallest
+    // so deg annihilator g is smallest
     numMonomMaxDegAnnF = FirstDependColumn(matrix);
 
     // the same for ~f - inverse function
