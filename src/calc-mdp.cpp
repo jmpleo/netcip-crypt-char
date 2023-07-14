@@ -20,7 +20,7 @@ int main(int argc, char** argv)
         return 1;
     }
 
-    ProgressBar<80> progbar;
+    ProgressBar<> progbar;
     NetCip::Enc enc;
 
     uint64_t MDP, xCount, nKey,

@@ -6,7 +6,7 @@
 #include <ostream>
 #include <sys/types.h>
 
-template <size_t With>
+template <size_t With=50>
 struct ProgressBar
 {
     ProgressBar ();

@@ -13,7 +13,7 @@ $R^F [l,s] (\omega_1,...,\omega_m)=(\omega_1,...,\omega_{s-1},F(\omega_l,\omega_
 
 The composition $R^F[l_1,s_1]R^F[l_2,s_2]...R^F[l_h,s_h]$ implements substitution on the $nm$-bit block: $\Phi^F_N : Z_2^{nm}\to Z_2^{nm}$
 
-Subtitution parameters: $n, m, h$, where $h$ - number of rounds (or *height*). 
+Subtitution parameters: $n, m, h$, where $h$ - number of rounds (or *height*).
 Network (sequence of pairs ($l$, $s$)) - also public parameter. The secret parameter is $F$ (tipical size $n$ - byte, so $n=8 $).
 
 Example Network for 7 Rounds: $m=4,\ h=7$, and network $N=(1,2),(2,4),(4,3),(3,1),(1,2),(2,1),(1,4) $
@@ -45,7 +45,7 @@ Example Network for 7 Rounds: $m=4,\ h=7$, and network $N=(1,2),(2,4),(4,3),(3,1
    ```powershell
    cmake . -D__N=<N> -D__M=<M> -D__H=<H>
    cmake --build build
-   ``` 
+   ```
 
 4. More configuration
 
@@ -60,6 +60,6 @@ Example Network for 7 Rounds: $m=4,\ h=7$, and network $N=(1,2),(2,4),(4,3),(3,1
 For example, NL-computing:
 ```bash
 cd stat
-../build/netcip-nl-<N>-<M>-<H>
+../bin/netcip-nl-<N>-<M>-<H>
 # saving in ./netstat-nl-<N>-<M>-<H>.csv
 ```

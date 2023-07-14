@@ -26,7 +26,7 @@ int main(int argc, char** argv)
         return 1;
     }
 
-    ProgressBar<80> progbar;
+    ProgressBar<> progbar;
     NetCip::Enc enc;
 
     char progressBar[101]; progressBar[100] = 0;
