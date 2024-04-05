@@ -42,8 +42,7 @@ int AlgebraicImmunity ( const std::vector<Block> &blockSet )
     FormingMatrix(matrix, f, monoms, true);
     numMonomMaxDegAnnNegF = FirstDependColumn(matrix);
 
-    #define MIN(a,b) (a < b ? a : b)
-    return monoms[MIN(numMonomMaxDegAnnF, numMonomMaxDegAnnNegF)].second;
+    return monoms[std::min(numMonomMaxDegAnnF, numMonomMaxDegAnnNegF)].second;
 }
 
 int AlgebraicImmunity ( const bool_vec &f )
@@ -83,6 +82,5 @@ int AlgebraicImmunity ( const bool_vec &f )
     FormingMatrix(matrix, f, monoms, true);
     numMonomMaxDegAnnNegF = FirstDependColumn(matrix);
 
-    #define MIN(a,b) (a < b ? a : b)
-    return monoms[MIN(numMonomMaxDegAnnF, numMonomMaxDegAnnNegF)].second;
+    return monoms[std::min(numMonomMaxDegAnnF, numMonomMaxDegAnnNegF)].second;
 }
