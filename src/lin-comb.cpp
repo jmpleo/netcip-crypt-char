@@ -16,10 +16,15 @@ void LinearCombination( std::vector<Block> &source,
                         std::vector<Block> &dest,
                         Block &coef )
 {
+    static uint64_t bitValue;
+    static uint64_t k;
+    static uint64_t bitNum;
+    static uint64_t x;
+    static uint64_t blockSizeInBit = Block::NUMSUBBLOCKS * Block::SUBBLOCKSIZE;
+    static uint64_t funcLen = (1ULL << blockSizeInBit);
+
     std::copy(source.begin(), source.end(), dest.begin());
-    static uint64_t bitValue, k, bitNum, x,
-        blockSizeInBit = Block::NUMSUBBLOCKS * Block::SUBBLOCKSIZE,
-        funcLen = (1ULL << blockSizeInBit);
+
     for (x = 0; x < funcLen; ++x) {
         dest[x] &= coef;
         bitValue = 0;

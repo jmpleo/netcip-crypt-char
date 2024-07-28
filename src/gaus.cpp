@@ -58,7 +58,9 @@ uint64_t FirstDependColumn ( bool_mat &mat )
 
              // considered half only due to upper estim of AI
              colCount = rowCount >> 1;
-    int* index = new int[colCount];
+
+    // optimization
+    std::vector<int> index(colCount);
 
     for (col = 0; col < colCount; ++col) {
 
@@ -98,7 +100,7 @@ uint64_t FirstDependColumn ( bool_mat &mat )
             break;
         }
     }
-    delete [] index;
+    //delete [] index;
     return colCount;
 }
 
