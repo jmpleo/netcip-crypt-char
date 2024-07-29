@@ -1,5 +1,4 @@
-#ifndef KEY_H
-#define KEY_H
+#pragma once
 
 #include "types.h"
 #include "block.h"
@@ -18,7 +17,8 @@ public:
     void SetRandomTable();
 
 protected:
-    #define TABLE_DIM (1 << Block::SUBBLOCKSIZE)
+    static constexpr auto TABLE_DIM = (1ULL << Block::SUBBLOCKSIZE);
+
     byte encTab_[TABLE_DIM][TABLE_DIM];
     byte decTab_[TABLE_DIM][TABLE_DIM];
 
@@ -26,4 +26,3 @@ private:
     void GenerateTables();
 };
 
-#endif

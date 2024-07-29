@@ -5,10 +5,16 @@
 
 int AlgebraicImmunity ( const std::vector<Block> &blockSet )
 {
-    uint64_t i, numMonomMaxDegAnnF, numMonomMaxDegAnnNegF, funcLen = blockSet.size();
+    uint64_t
+        i,
+        numMonomMaxDegAnnF,
+        numMonomMaxDegAnnNegF,
+        funcLen = blockSet.size();
+
     static std::vector<monom_and_deg> monoms(funcLen);
     static bool_mat matrix(funcLen, bool_vec(funcLen >> 1, 0));
     static bool_vec f(funcLen);
+
     for (i = 0; i < funcLen; ++i) {
         f[i] = static_cast<bool>(blockSet[i]);
     }
@@ -47,7 +53,11 @@ int AlgebraicImmunity ( const std::vector<Block> &blockSet )
 
 int AlgebraicImmunity ( const bool_vec &f )
 {
-    uint64_t numMonomMaxDegAnnF, numMonomMaxDegAnnNegF, funcLen = f.size();
+    uint64_t
+        numMonomMaxDegAnnF,
+        numMonomMaxDegAnnNegF,
+        funcLen = f.size();
+
     static std::vector<monom_and_deg> monoms(funcLen);
     static bool_mat matrix(funcLen, bool_vec(funcLen >> 1, 0));
 

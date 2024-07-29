@@ -1,8 +1,6 @@
-#ifndef PROGBAR_H
-#define PROGBAR_H
+#pragma once
 
 #include <cstddef>
-#include <fstream>
 #include <ostream>
 #include <sys/types.h>
 
@@ -10,15 +8,15 @@ template <size_t With=50>
 struct ProgressBar
 {
     ProgressBar ();
-    inline void Show ( float progress, std::ostream&, const char* info="");
+    inline void Show (float progress, std::ostream&, const char* info="");
 
 private:
-    char _progressBar[With + 1];
+    char bar_[With + 1];
 };
 
 
 template <size_t With>
-ProgressBar<With>::ProgressBar () { _progressBar[With] = 0; }
+ProgressBar<With>::ProgressBar () { bar_[With] = 0; }
 
 template <size_t With>
 inline void ProgressBar<With>::Show ( float progress,
@@ -26,12 +24,15 @@ inline void ProgressBar<With>::Show ( float progress,
                                       const char* info )
 {
     size_t i = 0;
-    for (; i < progress * With; _progressBar[i] = '#', ++i) {}
-    for (; i < With; _progressBar[i] = '.', ++i) {}
-    stream << "[" << _progressBar << "] "
-           << static_cast<int>(progress * 100) << "% "
-           << info << "\r";
+
+    for (; i < progress * With; bar_[i] = '#', ++i) { }
+    for (; i < With;            bar_[i] = '.', ++i) { }
+
+    stream
+        << "[" << bar_ << "] "
+        << static_cast<int>(progress * 100) << "% "
+        << info << "\r";
+
     stream.flush();
 }
 
-#endif

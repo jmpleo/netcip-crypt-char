@@ -14,30 +14,34 @@
 #include <string>
 #include <vector>
 
-#include <numeric>
-#include <algorithm>
 #include <cmath>
 
 
 int main(int argc, char** argv)
 {
     if (argc != 2) {
-        std::cout << "netstat-ai {volume}\n";
+        std::cerr<< "netstat-ai KEYS\n";
         return 1;
     }
 
     ProgressBar<> progbar;
     NetCip::Enc enc;
 
-    char progressBar[101]; progressBar[100] = 0;
+    char progressBar[101] = { 0 };
     float progress;
-    uint64_t ai, x, minAI, nKey,
-             funcLen = (1ULL << (enc.SUBBLOCKSIZE * enc.NUMSUBBLOCKS)),
-             totalKeys = std::stoull(argv[1]);
+
+    uint64_t
+        ai,
+        x,
+        minAI,
+        nKey,
+        funcLen = (1ULL << (enc.SUBBLOCKSIZE * enc.NUMSUBBLOCKS)),
+        totalKeys = std::stoull(argv[1]);
 
     //std::vector<uint64_t> aiValues(funcLen);
-    std::vector<Block> blockSet(funcLen),
-                       linComb(funcLen);
+    std::vector<Block>
+        blockSet(funcLen),
+        linComb(funcLen);
 
     for (nKey = 0; nKey < totalKeys; ++nKey) {
         //aiValues.clear();
@@ -54,8 +58,7 @@ int main(int argc, char** argv)
             }
 
             // for each x=x_1x_2...x_nm and coef=c_1c_2...c_nm
-            // linComb[x] = (f_1(x) & c_1) ^ ... ^ (f_nm(x) & c_nm)
-            // then you can linComb[x] (is a Block) cast to bool,
+            // linComb[x] = (f_1(x) & c_1) ^ ... ^ (f_nm(x) & c_nm) then you can linComb[x] (is a Block) cast to bool,
             // so linComb using as "bool_vec" (bool function)
             LinearCombination(blockSet, linComb, coef);
             if (ai = AlgebraicImmunity(linComb), ai < minAI) {
@@ -73,11 +76,15 @@ int main(int argc, char** argv)
 
         //f << *std::min_element(aiValues.begin(), aiValues.end()) << std::endl;
 
-        f << minAI << std::endl;
-        progbar.Show(static_cast<float>(nKey) / totalKeys, std::cout);
+        (f ? f : std::cout) << minAI << std::endl;
+
+        progbar.Show(static_cast<float>(nKey) / totalKeys, std::cerr);
 
         //std::cout << "\rAI: " <<  minAI << " progress: " << nKey + 1 << "/" << totalKeys;
         //std::cout.flush();
-    } std::cout << std::endl;
+    }
+
+    std::cerr << std::endl;
+
     return 0;
 }

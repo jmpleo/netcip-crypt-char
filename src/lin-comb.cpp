@@ -1,6 +1,5 @@
 #include "lin-comb.h"
 #include "block.h"
-#include "types.h"
 
 #include <algorithm>
 #include <memory.h>

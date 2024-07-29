@@ -11,6 +11,8 @@ void Block::Print() const
     }
     std::cout << (int)subs[FixedBlockParam::NUMSUBBLOCKS-1] << ")\n";
 }
+
+
 bool Block::IsZero() const
 {
     for (unsigned int i = 0; i < FixedBlockParam::NUMSUBBLOCKS; ++i) {
@@ -20,12 +22,16 @@ bool Block::IsZero() const
     }
     return true;
 }
+
+
 Block::Block()
 {
     for(unsigned int i = 0; i < FixedBlockParam::NUMSUBBLOCKS; ++i) {
         subs[i] = 0;
     }
 }
+
+
 Block::Block(uint64_t a)
 {
     for (unsigned int i = 0; i < FixedBlockParam::NUMSUBBLOCKS; ++i) {
@@ -37,6 +43,8 @@ Block::Block(uint64_t a)
         ) & (0xFF >> (8 - FixedBlockParam::SUBBLOCKSIZE));
     }
 }
+
+
 Block& Block::operator=(uint64_t a)
 {
     for (unsigned int i = 0; i < FixedBlockParam::NUMSUBBLOCKS; ++i) {
@@ -49,10 +57,14 @@ Block& Block::operator=(uint64_t a)
     }
     return *this;
 }
+
+
 uint8_t& Block::operator [] (unsigned int i)
 {
     return subs[i];
 }
+
+
 Block& Block::operator &= (Block const & other)
 {
     for (unsigned int i = 0; i < FixedBlockParam::NUMSUBBLOCKS; ++i) {
@@ -60,6 +72,8 @@ Block& Block::operator &= (Block const & other)
     }
     return *this;
 }
+
+
 Block& Block::operator++()
 {
     for (unsigned int i = 0; i < FixedBlockParam::NUMSUBBLOCKS; ++i) {
@@ -71,12 +85,16 @@ Block& Block::operator++()
     }
     return *this;
 }
+
+
 Block::Block(const Block& other)
 {
     for (int i = 0; i < FixedBlockParam::NUMSUBBLOCKS; ++i) {
         subs[i] = other.subs[i];
     }
 }
+
+
 Block& Block::operator=(const Block& other)
 {
     for (int i = 0; i < FixedBlockParam::NUMSUBBLOCKS; ++i) {
@@ -84,6 +102,8 @@ Block& Block::operator=(const Block& other)
     }
     return *this;
 }
+
+
 Block& Block::operator^=(const Block& other)
 {
     for (int i = 0; i < FixedBlockParam::NUMSUBBLOCKS; ++i) {
@@ -91,6 +111,8 @@ Block& Block::operator^=(const Block& other)
     }
     return *this;
 }
+
+
 bool Block::operator==(const Block& other)
 {
     for (int i = 0; i < FixedBlockParam::NUMSUBBLOCKS; ++i) {

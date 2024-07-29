@@ -13,28 +13,31 @@
 #include <string>
 #include <vector>
 
-#include <numeric>
-#include <algorithm>
 #include <cmath>
 
 
 int main(int argc, char** argv)
 {
     if (argc != 2) {
-        std::cout << "netstat-nl {volume}\n";
+        std::cerr << "netstat-nl KEYS\n";
         return 1;
     }
 
     ProgressBar<> progbar;
     NetCip::Enc enc;
 
-    uint64_t nl, x, minNL, nKey,
-             funcLen = (1ULL << (enc.SUBBLOCKSIZE * enc.NUMSUBBLOCKS)),
-             totalKeys = std::stoull(argv[1]);
+    uint64_t
+        nl,
+        x,
+        minNL,
+        nKey,
+        funcLen = (1ULL << (enc.SUBBLOCKSIZE * enc.NUMSUBBLOCKS)),
+        totalKeys = std::stoull(argv[1]);
 
     //std::vector<uint64_t> nlValues(funcLen);
-    std::vector<Block> blockSet(funcLen),
-                       linComb(funcLen);
+    std::vector<Block>
+        blockSet(funcLen),
+        linComb(funcLen);
 
     for (nKey = 0; nKey < totalKeys; ++nKey) {
         //nlValues.clear();
@@ -60,9 +63,13 @@ int main(int argc, char** argv)
         );
 
         //f << *std::min_element(nlValues.begin(), nlValues.end()) << std::endl;
-        f << minNL << std::endl;
-        progbar.Show(static_cast<float>(nKey) / totalKeys, std::cout);
+        (f ? f : std::cout) << minNL << std::endl;
 
-    } std::cout << std::endl;
+        progbar.Show(static_cast<float>(nKey) / totalKeys, std::cerr);
+
+    }
+
+    std::cerr << std::endl;
+
     return 0;
 }

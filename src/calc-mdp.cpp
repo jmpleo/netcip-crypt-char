@@ -10,21 +10,24 @@
 #include <ostream>
 
 #include <string>
-#include <vector>
 
 
 int main(int argc, char** argv)
 {
     if (argc != 2) {
-        std::cout << "netstat-mdp {volume}\n";
+        std::cerr << "netstat-mdp KEYS\n";
         return 1;
     }
 
     ProgressBar<> progbar;
     NetCip::Enc enc;
 
-    uint64_t MDP, xCount, nKey,
-             totalKeys = std::stoull(argv[1]);
+    uint64_t
+        MDP,
+        xCount,
+        nKey,
+        totalKeys = std::stoull(argv[1]);
+
     //std::vector<uint64_t> MDPs(totalKeys);
     for (nKey = 0; nKey < totalKeys; ++nKey) {
         enc.SetRandomTable();
@@ -55,8 +58,14 @@ int main(int argc, char** argv)
                        "_" + std::to_string(enc.ROUNDS) + ".csv",
             std::ios_base::app
         );
-        f << MDP << std::endl;
-        progbar.Show(static_cast<float>(nKey) / totalKeys, std::cout);
-    } std::cout << std::endl;
+
+        (f ? f : std::cout) << MDP << std::endl;
+
+        progbar.Show(static_cast<float>(nKey) / totalKeys, std::cerr);
+
+    }
+
+    std::cerr << std::endl;
+
     return 0;
 }

@@ -1,5 +1,4 @@
-#ifndef AI_H
-#define AI_H
+#pragma once
 
 #include "block.h"
 #include "types.h"
@@ -8,5 +7,3 @@
 int AlgebraicImmunity(const std::vector<Block> &blockSet);
 
 int AlgebraicImmunity(const bool_vec &func);
-
-#endif

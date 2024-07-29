@@ -1,5 +1,4 @@
-#ifndef BLOCK_H
-#define BLOCK_H
+#pragma once
 
 #include <cassert>
 #include <vector>
@@ -34,9 +33,10 @@ struct Block : FixedBlockParam <_N,_M>
 private:
     byte subs[FixedBlockParam::NUMSUBBLOCKS];
 };
+
+
 struct Transform
 {
     void ProcessBlock(Block &block) {}
 };
 
-#endif

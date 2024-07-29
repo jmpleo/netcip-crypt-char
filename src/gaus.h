@@ -1,8 +1,6 @@
-#ifndef GAUS_H
-#define GAUS_H
+#pragma once
 
 #include "types.h"
-#include "block.h"
 
 uint64_t FirstDependColumn ( bool_mat &mat );
 
@@ -13,4 +11,3 @@ void FormingMatrix ( bool_mat &mat,
                      std::vector<monom_and_deg> &deg,
                      bool negFunc=false );
 
-#endif

@@ -4,18 +4,16 @@
 #include "block.h"
 #include "config.h"
 
-class Network : public Block,
-                public FixedRounds<_H>
+class Network : public Block , public FixedRounds<_H>
 {
 public:
     Network()
     {
-        for (unsigned int i = 0; i < FixedRounds::ROUNDS; ++i) {
-            net_[i] = i % Block::NUMSUBBLOCKS;
-        }
+        for (unsigned int i = 0; i < ROUNDS; ++i) net_[i] = i % NUMSUBBLOCKS;
     }
+
 protected:
-    unsigned int net_[FixedRounds::ROUNDS];
+    unsigned int net_[ROUNDS];
 };
 
 #endif

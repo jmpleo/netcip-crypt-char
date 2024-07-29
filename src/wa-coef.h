@@ -1,5 +1,4 @@
-#ifndef WA_COEF_H
-#define WA_COEF_H
+#pragma once
 
 #include "types.h"
 #include "block.h"
@@ -10,6 +9,4 @@
 std::vector<int64_t> WACoef ( const bool_vec &func );
 
 std::vector<int64_t> WACoef ( const std::vector<Block> &blockSet );
-
-#endif
 

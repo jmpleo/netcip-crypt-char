@@ -1,22 +1,18 @@
-#ifndef FIXEDPARAM_H
-#define FIXEDPARAM_H
-
+#pragma once
 
 template <unsigned int N, unsigned int M>
 struct FixedBlockParam
 {
-    static const int SUBBLOCKSIZE = N;
-    static const int NUMSUBBLOCKS = M;
+    static constexpr int SUBBLOCKSIZE = N;
+    static constexpr int NUMSUBBLOCKS = M;
 };
 template <unsigned int S>
 struct FixedBlockSize
 {
-    static const int BLOCKSIZE = S;
+    static constexpr int BLOCKSIZE = S;
 };
 template <unsigned int R>
 struct FixedRounds
 {
-    static const int ROUNDS = R;
+    static constexpr int ROUNDS = R;
 };
-
-#endif

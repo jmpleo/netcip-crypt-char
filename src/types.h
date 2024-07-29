@@ -1,17 +1,10 @@
-#ifndef TYPES_H
-#define TYPES_H
+#pragma once
 
 #include <cstdint>
 #include <vector>
 
-typedef std::vector<bool>
-        bool_vec;
-typedef std::vector<bool_vec>
-        bool_mat;
-typedef std::uint8_t
-        byte;
-typedef uint16_t
-        monom_t;
-typedef std::pair<monom_t, int>
-        monom_and_deg;
-#endif
+using bool_vec = std::vector<bool>;
+using bool_mat = std::vector<bool_vec>;
+using byte = std::uint8_t;
+using monom_t = std::uint16_t;
+using monom_and_deg = std::pair<monom_t, int>;

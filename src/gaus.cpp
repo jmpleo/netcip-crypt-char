@@ -6,24 +6,27 @@
 #include <bits/stdint-uintn.h>
 #include <cstdint>
 #include <cstdlib>
-#include <iostream>
-#include <map>
 #include <utility>
+
 
 void FormingMatrix( bool_mat &mat,
                     const bool_vec &func,
                     std::vector<monom_and_deg> &degs,
                     bool negFunc )
 {
-    uint64_t i, j, monom,
-             funcLen = func.size(),
-             matCols = funcLen >> 1;
+    uint64_t
+        i,
+        j,
+        monom,
+        funcLen = func.size(),
+        matCols = funcLen >> 1;
+
     for (i = 0; i < funcLen; ++i) {
         if (func[i] ^ negFunc) {
             for (j = 0; j < matCols; ++j) {
                 monom = degs[j].first;
                 mat[i][j]= (
-                    ((i | (~monom)) & (funcLen-1)) == (funcLen-1)
+                    ((i | (~monom)) & (funcLen - 1)) == (funcLen - 1)
                 );
             }
         } else {
@@ -35,12 +38,15 @@ void MonomsDeg( std::vector<monom_and_deg> &deg )
 {
     deg[0] = {0, 0};
     deg[1] = {1, 1};
-    uint64_t k, i, funcLen = deg.size();
-    for (i = 2;
-            i < funcLen; i *= 2) {
-        for (k = i;
-                k < 2*i; k += 2) {
-            deg[k] = {k, deg[k - i].second + 1};
+
+    uint64_t
+        k,
+        i,
+        funcLen = deg.size();
+
+    for (i = 2; i < funcLen; i *= 2) {
+        for (k = i; k < 2*i; k += 2) {
+            deg[k    ] = {k,    deg[k - i].second + 1};
             deg[k + 1] = {k + 1, deg[k + 1 - i].second + 1};
         }
     }
@@ -52,12 +58,16 @@ void MonomsDeg( std::vector<monom_and_deg> &deg )
 }
 uint64_t FirstDependColumn ( bool_mat &mat )
 {
-    uint64_t i, j, col, row,
-             start = 0,
-             rowCount = mat.size(),
+    uint64_t
+        i,
+        j,
+        col,
+        row,
+        start = 0,
+        rowCount = mat.size(),
 
-             // considered half only due to upper estim of AI
-             colCount = rowCount >> 1;
+        // considered half only due to upper estim of AI
+        colCount = rowCount >> 1;
 
     // optimization
     std::vector<int> index(colCount);
