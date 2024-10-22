@@ -1,4 +1,5 @@
 #include "block.h"
+#include "net.h"
 #include "netcip.h"
 #include "progbar.h"
 
@@ -20,7 +21,7 @@ int main(int argc, char** argv)
     }
 
     ProgressBar<> progbar;
-    NetCip::Enc enc;
+    Enc enc;
 
     uint64_t
         MDP,
@@ -30,7 +31,7 @@ int main(int argc, char** argv)
 
     //std::vector<uint64_t> MDPs(totalKeys);
     for (nKey = 0; nKey < totalKeys; ++nKey) {
-        enc.SetRandomTable();
+        enc.UpdateKey();
         MDP = 0;
         for (Block a(1), b, x, dx, df; !a.IsZero(); ++a) {
             for (b = 1; !b.IsZero(); ++b) {
@@ -40,7 +41,8 @@ int main(int argc, char** argv)
                     dx = x; df = x; dx ^= a;
                     enc.ProcessBlock(dx);  // after: dx = E(x+a)
                     enc.ProcessBlock(df);  // after: df = E(x)
-                    if ((df ^= dx) == b) { // E(x+a) + E(x) == b
+                    df ^= dx;
+                    if (df == b) { // E(x+a) + E(x) == b
                         ++xCount;
                     }
                     ++x;
@@ -53,13 +55,13 @@ int main(int argc, char** argv)
         //MDPs[nKey] = MDP;
 
         std::ofstream f(
-            "netstat_mdp_" + std::to_string(enc.SUBBLOCKSIZE) +
-                       "_" + std::to_string(enc.NUMSUBBLOCKS) +
-                       "_" + std::to_string(enc.ROUNDS) + ".csv",
+            "netstat_mdp_" + std::to_string(Block::SUBBLOCKSIZE) +
+                       "_" + std::to_string(Block::NUMSUBBLOCKS) +
+                       "_" + std::to_string(Network::ROUNDS) + ".csv",
             std::ios_base::app
         );
 
-        (f ? f : std::cout) << MDP << std::endl;
+        (f ? f : std::cout) << enc.HexKey() << ',' << enc.HexNet() << ',' << MDP << std::endl;
 
         progbar.Show(static_cast<float>(nKey) / totalKeys, std::cerr);
 

@@ -25,17 +25,14 @@ int main(int argc, char** argv)
     }
 
     ProgressBar<> progbar;
-    NetCip::Enc enc;
-
-    char progressBar[101] = { 0 };
-    float progress;
+    Enc enc;
 
     uint64_t
         ai,
         x,
         minAI,
         nKey,
-        funcLen = (1ULL << (enc.SUBBLOCKSIZE * enc.NUMSUBBLOCKS)),
+        funcLen = (1ULL << (Block::SUBBLOCKSIZE * Block::NUMSUBBLOCKS)),
         totalKeys = std::stoull(argv[1]);
 
     //std::vector<uint64_t> aiValues(funcLen);
@@ -44,9 +41,12 @@ int main(int argc, char** argv)
         linComb(funcLen);
 
     for (nKey = 0; nKey < totalKeys; ++nKey) {
+
+        progbar.Show(static_cast<float>(nKey) / totalKeys, std::cerr);
+
         //aiValues.clear();
         minAI = INT64_MAX;
-        enc.SetRandomTable();
+        enc.UpdateKey();
         for (Block coef(1); !coef.IsZero(); ++coef) {
 
             // blockSet[...] is set of value coordinate functions of Enc()
@@ -68,17 +68,16 @@ int main(int argc, char** argv)
         }
 
         std::ofstream f(
-            "netstat_ai_" + std::to_string(enc.SUBBLOCKSIZE) +
-            "_" + std::to_string(enc.NUMSUBBLOCKS) +
-            "_" + std::to_string(enc.ROUNDS) + ".csv",
+            "netstat_ai_" + std::to_string(Block::SUBBLOCKSIZE) +
+            "_" + std::to_string(Block::NUMSUBBLOCKS) +
+            "_" + std::to_string(Network::ROUNDS) + ".csv",
             std::ios_base::app
         );
 
         //f << *std::min_element(aiValues.begin(), aiValues.end()) << std::endl;
 
-        (f ? f : std::cout) << minAI << std::endl;
+        (f ? f : std::cout) << enc.HexKey() << ',' << enc.HexNet() << ',' << minAI << std::endl;
 
-        progbar.Show(static_cast<float>(nKey) / totalKeys, std::cerr);
 
         //std::cout << "\rAI: " <<  minAI << " progress: " << nKey + 1 << "/" << totalKeys;
         //std::cout.flush();

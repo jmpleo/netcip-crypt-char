@@ -1,7 +1,6 @@
 #include "lin-comb.h"
 #include "block.h"
 
-#include <algorithm>
 #include <memory.h>
 #include <vector>
 
@@ -22,14 +21,17 @@ void LinearCombination( std::vector<Block> &source,
     static uint64_t blockSizeInBit = Block::NUMSUBBLOCKS * Block::SUBBLOCKSIZE;
     static uint64_t funcLen = (1ULL << blockSizeInBit);
 
-    std::copy(source.begin(), source.end(), dest.begin());
+    //std::copy(source.begin(), source.end(), dest.begin());
 
     for (x = 0; x < funcLen; ++x) {
-        dest[x] &= coef;
+        //dest[x] &= coef;
         bitValue = 0;
+
         for (k = 0; k < Block::NUMSUBBLOCKS; ++k) {
+            dest[x][k] = source[x][k] & coef[k];
             for (bitNum = 0; bitNum < blockSizeInBit; ++bitNum) {
-                bitValue ^= (dest[x][k] >> bitNum) & 0x1;
+                //bitValue ^= (dest[x][k] >> bitNum) & 0x1;
+                bitValue ^= (dest[x][k] >> bitNum) & 1;
             }
         }
         dest[x] = bitValue;

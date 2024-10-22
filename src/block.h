@@ -27,16 +27,11 @@ struct Block : FixedBlockParam <_N,_M>
     Block& operator ^= (const Block& other);
     Block& operator ++ ();
     bool   operator == (const Block& other);
+    bool   operator != (const Block& other) { return ! (*this == other); }
            operator bool() const { return !IsZero(); }
 
     static bool_vec ToBoolFunc(const std::vector<Block> &blockSet);
 private:
     byte subs[FixedBlockParam::NUMSUBBLOCKS];
-};
-
-
-struct Transform
-{
-    void ProcessBlock(Block &block) {}
 };
 

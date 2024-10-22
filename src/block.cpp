@@ -34,14 +34,7 @@ Block::Block()
 
 Block::Block(uint64_t a)
 {
-    for (unsigned int i = 0; i < FixedBlockParam::NUMSUBBLOCKS; ++i) {
-        subs[i] = (byte)(
-            a >> (
-                FixedBlockParam::SUBBLOCKSIZE
-                * (FixedBlockParam::NUMSUBBLOCKS - i - 1)
-            )
-        ) & (0xFF >> (8 - FixedBlockParam::SUBBLOCKSIZE));
-    }
+    *this = a;
 }
 
 
@@ -89,8 +82,8 @@ Block& Block::operator++()
 
 Block::Block(const Block& other)
 {
-    for (int i = 0; i < FixedBlockParam::NUMSUBBLOCKS; ++i) {
-        subs[i] = other.subs[i];
+    if (&other != this) {
+        *this = other;
     }
 }
 

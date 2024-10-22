@@ -2,6 +2,7 @@
 
 #include "types.h"
 #include "block.h"
+#include <ostream>
 
 
 /*
@@ -9,11 +10,13 @@
  * EncTable is a matrix, where EncTable[x][y] = F(x,y)
  * size of EncTable is (2^N * 2^N) N-bits
  */
-class Table : Block
+class Table
 {
 public:
     bool LoadTable(const char * filename);
     bool SaveTable(const char * filename);
+    std::string HexEncKey() const;
+    std::string HexDecKey() const;
     void SetRandomTable();
 
 protected:

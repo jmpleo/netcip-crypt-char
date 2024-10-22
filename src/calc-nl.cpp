@@ -1,4 +1,5 @@
 #include "block.h"
+#include "net.h"
 #include "netcip.h"
 #include "nl.h"
 #include "lin-comb.h"
@@ -24,14 +25,14 @@ int main(int argc, char** argv)
     }
 
     ProgressBar<> progbar;
-    NetCip::Enc enc;
+    Enc enc;
 
     uint64_t
         nl,
         x,
         minNL,
         nKey,
-        funcLen = (1ULL << (enc.SUBBLOCKSIZE * enc.NUMSUBBLOCKS)),
+        funcLen = (1ULL << (Block::SUBBLOCKSIZE * Block::NUMSUBBLOCKS)),
         totalKeys = std::stoull(argv[1]);
 
     //std::vector<uint64_t> nlValues(funcLen);
@@ -42,7 +43,7 @@ int main(int argc, char** argv)
     for (nKey = 0; nKey < totalKeys; ++nKey) {
         //nlValues.clear();
         minNL = INT64_MAX;
-        enc.SetRandomTable();
+        enc.UpdateKey();
         for (Block coef(1); !coef.IsZero(); ++coef) {
             for (x = 0; x < funcLen; ++x) {
                 blockSet[x] = x;
@@ -56,14 +57,14 @@ int main(int argc, char** argv)
         }
 
         std::ofstream f(
-            "netstat_nl_" + std::to_string(enc.SUBBLOCKSIZE) +
-                      "_" + std::to_string(enc.NUMSUBBLOCKS) +
-                      "_" + std::to_string(enc.ROUNDS) + ".csv",
+            "netstat_nl_" + std::to_string(Block::SUBBLOCKSIZE) +
+                      "_" + std::to_string(Block::NUMSUBBLOCKS) +
+                      "_" + std::to_string(Network::ROUNDS) + ".csv",
             std::ios_base::app
         );
 
         //f << *std::min_element(nlValues.begin(), nlValues.end()) << std::endl;
-        (f ? f : std::cout) << minNL << std::endl;
+        (f ? f : std::cout) << enc.HexKey() << ',' << enc.HexNet() << ',' << minNL << std::endl;
 
         progbar.Show(static_cast<float>(nKey) / totalKeys, std::cerr);
 

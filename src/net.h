@@ -3,13 +3,22 @@
 
 #include "block.h"
 #include "config.h"
+#include <string>
 
-class Network : public Block , public FixedRounds<_H>
+class Network : public FixedRounds<_H>
 {
 public:
-    Network()
-    {
-        for (unsigned int i = 0; i < ROUNDS; ++i) net_[i] = i % NUMSUBBLOCKS;
+    Network() {
+        for (unsigned int i = 0; i < ROUNDS; ++i) net_[i] = i % Block::NUMSUBBLOCKS;
+    }
+
+    std::string HexNet () {
+        std::string seq;
+        for (auto &l : net_) {
+            seq += std::to_string(l);
+            seq += '-';
+        }
+        return seq.pop_back(), seq;
     }
 
 protected:

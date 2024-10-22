@@ -4,6 +4,7 @@
 
 #include <algorithm>
 #include <bits/stdint-uintn.h>
+#include <cstddef>
 #include <cstdint>
 #include <cstdlib>
 #include <utility>
@@ -17,23 +18,22 @@ void FormingMatrix( bool_mat &mat,
     uint64_t
         i,
         j,
-        monom,
         funcLen = func.size(),
         matCols = funcLen >> 1;
 
     for (i = 0; i < funcLen; ++i) {
         if (func[i] ^ negFunc) {
             for (j = 0; j < matCols; ++j) {
-                monom = degs[j].first;
-                mat[i][j]= (
-                    ((i | (~monom)) & (funcLen - 1)) == (funcLen - 1)
+                mat[i][j] = (
+                    // monom(i)
+                    ((i | ~degs[j].first) & (funcLen - 1)) == (funcLen - 1)
                 );
             }
-        } else {
-            std::fill(mat[i].begin(), mat[i].end(), 0);
         }
     }
 }
+
+
 void MonomsDeg( std::vector<monom_and_deg> &deg )
 {
     deg[0] = {0, 0};
@@ -56,6 +56,8 @@ void MonomsDeg( std::vector<monom_and_deg> &deg )
                         return a.second < b.second;
                       } );
 }
+
+
 uint64_t FirstDependColumn ( bool_mat &mat )
 {
     uint64_t
@@ -63,13 +65,14 @@ uint64_t FirstDependColumn ( bool_mat &mat )
         j,
         col,
         row,
+        stop,
         start = 0,
         rowCount = mat.size(),
 
         // considered half only due to upper estim of AI
         colCount = rowCount >> 1;
 
-    // optimization
+    // optimization array with index non zero elem in pivot row
     std::vector<int> index(colCount);
 
     for (col = 0; col < colCount; ++col) {
@@ -77,40 +80,44 @@ uint64_t FirstDependColumn ( bool_mat &mat )
         // skip row in column = col where elemets is zero
         for (row = start; row < rowCount && !mat[row][col]; ++row) {}
 
-        // gaus elumination
-        if (row < rowCount) {
-            if (row != start) {
-                std::swap(mat[row], mat[start]);
-            }
-            for (i = 0, j = col; j < colCount; ++j) {
-                if (mat[start][j]) {
-                    index[i++] = j;
-                }
-            }
-            for (; i < colCount; ++i) {
-                index[i] = -1;
-            }
-            for (i = start + 1; i < rowCount; ++i) {
-
-                // skip row where element in col position is zero
-                if (mat[i][col]) {
-
-                    // skip col where mat[start][j] is zero
-                    for (j = 0; index[j] != -1; ++j) {
-                        mat[i][index[j]]
-                            = mat[i][index[j]] ^ mat[start][index[j]];
-                    }
-                }
-            }
-            ++start;
-        }
-        else {
-            // number col of first cols-depend
+        // number col of first cols-depend
+        if (row >= rowCount) {
             colCount = col;
             break;
         }
+
+        // gaus elumination
+        if (row != start) {
+            std::swap(mat[row], mat[start]);
+        }
+        for (i = 0, j = col; j < colCount; ++j) {
+            index[i] = j;
+            i += (uint64_t)(mat[start][j]);
+            //if (mat[start][j]) {
+            //    index[i] = j;
+            //    i++;
+            //}
+        }
+        stop = i;
+        //for (; i < colCount; ++i) {
+        //    index[i] = -1;
+        //}
+        for (i = start + 1; i < rowCount; ++i) {
+
+            // skip row where element in col position is zero
+            if (mat[i][col]) {
+
+                // skip col where mat[start][j] is zero
+                // for (j = 0; index[j] != -1; ++j) {
+                for (j = 0; j < stop; ++j) {
+                    mat[i][ index[j] ] = mat[i][ index[j] ] ^ mat[start][ index[j] ];
+                }
+            }
+        }
+
+        ++start;
     }
-    //delete [] index;
+
     return colCount;
 }
 
