@@ -8,21 +8,24 @@
 #include <cstdint>
 #include <cstdlib>
 #include <utility>
+#include <vector>
 
 
-void FormingMatrix( bool_mat &mat,
-                    const bool_vec &func,
-                    std::vector<monom_and_deg> &degs,
-                    bool negFunc )
+void InitMatrix(
+    std::vector<std::vector<bool>> & mat,
+    std::vector<bool> const & f,
+    std::vector<std::pair<std::uint64_t, unsigned>> const & degs,
+    bool notf
+)
 {
-    uint64_t
+    std::uint64_t
         i,
         j,
-        funcLen = func.size(),
+        funcLen = f.size(),
         matCols = funcLen >> 1;
 
     for (i = 0; i < funcLen; ++i) {
-        if (func[i] ^ negFunc) {
+        if (f[i] ^ notf) {
             for (j = 0; j < matCols; ++j) {
                 mat[i][j] = (
                     // monom(i)
@@ -34,15 +37,16 @@ void FormingMatrix( bool_mat &mat,
 }
 
 
-void MonomsDeg( std::vector<monom_and_deg> &deg )
+void InitMonomsWithDegree(std::vector<std::pair<std::uint64_t, unsigned int>> &deg)
 {
-    deg[0] = {0, 0};
-    deg[1] = {1, 1};
 
-    uint64_t
+    std::uint64_t
         k,
         i,
         funcLen = deg.size();
+
+    deg[0] = {0, 0};
+    deg[1] = {1, 1};
 
     for (i = 2; i < funcLen; i *= 2) {
         for (k = i; k < 2*i; k += 2) {
@@ -50,17 +54,20 @@ void MonomsDeg( std::vector<monom_and_deg> &deg )
             deg[k + 1] = {k + 1, deg[k + 1 - i].second + 1};
         }
     }
-    std::stable_sort( deg.begin(),
-                      deg.end(),
-                      [] (std::pair<uint64_t, int> a, std::pair<int, int> b) {
-                        return a.second < b.second;
-                      } );
+
+    std::stable_sort(
+        deg.begin(),
+        deg.end(),
+        [] (std::pair<uint64_t, int> a, std::pair<int, int> b) {
+            return a.second < b.second;
+        }
+    );
 }
 
 
-uint64_t FirstDependColumn ( bool_mat &mat )
+std::uint64_t FirstDependentColumn(std::vector<std::vector<bool>> &mat)
 {
-    uint64_t
+    std::uint64_t
         i,
         j,
         col,
@@ -92,7 +99,7 @@ uint64_t FirstDependColumn ( bool_mat &mat )
         }
         for (i = 0, j = col; j < colCount; ++j) {
             index[i] = j;
-            i += (uint64_t)(mat[start][j]);
+            i += (std::uint64_t)(mat[start][j]);
             //if (mat[start][j]) {
             //    index[i] = j;
             //    i++;

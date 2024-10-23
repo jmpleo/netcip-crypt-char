@@ -3,14 +3,12 @@
 template <unsigned int N, unsigned int M>
 struct FixedBlockParam
 {
-    static constexpr int SUBBLOCKSIZE = N;
-    static constexpr int NUMSUBBLOCKS = M;
+    static constexpr int SUBBLOCK_SIZE = N;
+    static constexpr int NUM_SUBBLOCKS = M;
+    static constexpr int BLOCKSIZE = N * M;
 };
-template <unsigned int S>
-struct FixedBlockSize
-{
-    static constexpr int BLOCKSIZE = S;
-};
+
+
 template <unsigned int R>
 struct FixedRounds
 {

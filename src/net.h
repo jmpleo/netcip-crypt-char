@@ -5,14 +5,14 @@
 #include "config.h"
 #include <string>
 
-class Network : public FixedRounds<_H>
+class Network : public FixedRounds<config::H>
 {
 public:
     Network() {
-        for (unsigned int i = 0; i < ROUNDS; ++i) net_[i] = i % Block::NUMSUBBLOCKS;
+        for (unsigned int i = 0; i < ROUNDS; ++i) net_[i] = i % Block::NUM_SUBBLOCKS;
     }
 
-    std::string HexNet () {
+    std::string NetScheme () {
         std::string seq;
         for (auto &l : net_) {
             seq += std::to_string(l);

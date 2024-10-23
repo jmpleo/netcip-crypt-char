@@ -12,7 +12,7 @@
  *
  * NOTE: Do not use this class for application cipher - use byte arr
  */
-struct Block : FixedBlockParam <_N,_M>
+struct Block : FixedBlockParam <config::N, config::M>
 {
     Block();
     Block(uint64_t);
@@ -21,6 +21,7 @@ struct Block : FixedBlockParam <_N,_M>
     bool IsZero() const;
     void Print() const;
     byte&  operator [] (unsigned i);
+    byte const & operator [] (unsigned i) const;
     Block& operator =  (uint64_t num);
     Block& operator =  (const Block& other);
     Block& operator &= (const Block& other);
@@ -30,8 +31,7 @@ struct Block : FixedBlockParam <_N,_M>
     bool   operator != (const Block& other) { return ! (*this == other); }
            operator bool() const { return !IsZero(); }
 
-    static bool_vec ToBoolFunc(const std::vector<Block> &blockSet);
 private:
-    byte subs[FixedBlockParam::NUMSUBBLOCKS];
+    byte subs[FixedBlockParam::NUM_SUBBLOCKS];
 };
 

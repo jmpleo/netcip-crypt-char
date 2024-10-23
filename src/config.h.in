@@ -1,7 +1,12 @@
 #pragma once
 
-#define _N @__N@
-#define _M @__M@
-#define _H @__H@
+namespace config {
 
-static_assert(_N * _M < 64, "blocksize < 64");
+constexpr const unsigned
+    N = @__N@,
+    M = @__M@,
+    H = @__H@;
+
+//static_assert(N * M < 64, "blocksize < 64");
+
+}

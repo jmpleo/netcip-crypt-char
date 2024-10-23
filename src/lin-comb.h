@@ -2,7 +2,7 @@
 
 #include "block.h"
 
-void LinearCombination( std::vector<Block> &source,
-                        std::vector<Block> &dest,
+void LinearCombination( std::vector<Block> const & funcSet,
+                        std::vector<bool> & linearComb,
                         Block & coef );
 

@@ -10,31 +10,26 @@
  * then you can linComb[x] (is a Block) cast to bool,
  * so linComb using as "bool_vec" (bool function)
  */
-void LinearCombination( std::vector<Block> &source,
-                        std::vector<Block> &dest,
+void LinearCombination( std::vector<Block> const & funcSet,
+                        std::vector<bool> & linearComb,
                         Block &coef )
 {
-    static uint64_t bitValue;
-    static uint64_t k;
-    static uint64_t bitNum;
-    static uint64_t x;
-    static uint64_t blockSizeInBit = Block::NUMSUBBLOCKS * Block::SUBBLOCKSIZE;
-    static uint64_t funcLen = (1ULL << blockSizeInBit);
+    Block block;
 
-    //std::copy(source.begin(), source.end(), dest.begin());
+    for (std::uint64_t bitNum, k, x = 0; x < funcSet.size(); ++x) {
 
-    for (x = 0; x < funcLen; ++x) {
-        //dest[x] &= coef;
-        bitValue = 0;
+        bool bit = 0;
 
-        for (k = 0; k < Block::NUMSUBBLOCKS; ++k) {
-            dest[x][k] = source[x][k] & coef[k];
-            for (bitNum = 0; bitNum < blockSizeInBit; ++bitNum) {
-                //bitValue ^= (dest[x][k] >> bitNum) & 0x1;
-                bitValue ^= (dest[x][k] >> bitNum) & 1;
+        for (k = 0; k < Block::NUM_SUBBLOCKS; ++k) {
+
+            block[k] = funcSet[x][k] & coef[k];
+
+            for (bitNum = 0; bitNum < Block::SUBBLOCK_SIZE; ++bitNum) {
+                bit ^= ((block[k] >> bitNum) & 1);
             }
         }
-        dest[x] = bitValue;
+
+        linearComb[x] = bit;
     }
 }
 

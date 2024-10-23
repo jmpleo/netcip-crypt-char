@@ -1,13 +1,16 @@
 #pragma once
 
 #include "types.h"
+#include <vector>
 
-uint64_t FirstDependColumn ( bool_mat &mat );
+std::uint64_t FirstDependentColumn ( std::vector<std::vector<bool>> & mat );
 
-void MonomsDeg ( std::vector<monom_and_deg> &deg );
+void InitMonomsWithDegree ( std::vector<std::pair<std::uint64_t, unsigned>> & deg );
 
-void FormingMatrix ( bool_mat &mat,
-                     const bool_vec &func,
-                     std::vector<monom_and_deg> &deg,
-                     bool negFunc=false );
+void InitMatrix (
+    std::vector<std::vector<bool>> & mat,
+    std::vector<bool> const & f,
+    std::vector<std::pair<std::uint64_t, unsigned>> const & deg,
+    bool notf = false
+);
 

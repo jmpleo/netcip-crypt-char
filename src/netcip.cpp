@@ -1,29 +1,54 @@
 #include "netcip.h"
 #include "net.h"
 
-/*
- * NOTE: Implementation transformition for experiment.
- *       In application use implementation:
- *
- * void NetCip::Enc::ProcessBlock ( byte* block )
- * {
- *      // define one round:
- *      #define N(l,s) ( block[j] = _encTab[ block[l] ][ block[s] ] )
- *
- *      // and weave a your network:
- *      // NOTE: You need keep M so that it does not get out of the block
- *      N(0,1); N(1,2); N(2,3); // ...
- * }
- *
- * void NetCip::Dec::ProcessBlock ( byte* block )
- * {
- *      #define N(l,s) ( block[j] = _decTab[ block[l] ][ block[s] ] )
- *
- *      // reverse you network:
- *      N(2,3); N(1,2); N(0,1); // ...
- * }
- *
- */
+
+void Enc::ProcessBlock ( byte* block )
+{
+    #define R1(i) (block[i + 1] = encTab_ \
+        [ block[i] ][ block[i + 1] ] \
+    )
+
+    #define C(i, j) (block[j] = encTab_ \
+        [ block[i] ][ block[j] ] \
+    )
+
+    #define L1(i) (block[i - 1] = encTab_ \
+        [ block[i] ][ block[i - 1] ] \
+    )
+
+    R1(0); R1(1); R1(2); R1(3); R1(4); R1(5); R1(6);
+    C(7, 0);
+    R1(6); R1(5); R1(4); R1(3); R1(2); R1(1); L1(2);
+
+    #undef R1
+    #undef C
+    #undef L1
+}
+
+void Dec::ProcessBlock ( byte* block )
+{
+    #define R1(i) (block[i] = decTab_ \
+        [ block[i + 1] ][ block[i] ] \
+    )
+
+    #define C(i, j) (block[j] = decTab_ \
+        [ block[i] ][ block[j] ] \
+    )
+
+    #define L1(i) (block[i] = decTab_ \
+        [ block[i - 1] ][ block[i] ] \
+    )
+
+    R1(1); L1(2); L1(3); L1(4); L1(5); L1(6); L1(7);
+    C(0, 7);
+    L1(7); L1(6); L1(5); L1(4); L1(3); L1(2); L1(1);
+
+    #undef R1
+    #undef C
+    #undef L1
+}
+
+
 void Enc::ProcessBlock ( Block &block )
 {
     for (unsigned int i = 1; i < Network::ROUNDS; ++i) {

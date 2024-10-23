@@ -7,26 +7,31 @@
 
 struct NetCip
     : protected Block
-    , protected Table
+    , protected Key
     , protected Network
 {
     NetCip() {}
-    void UpdateKey() { SetRandomTable(); }
-    std::string HexKey() { return Table::HexEncKey(); }
-    std::string HexNet() { return Network::HexNet(); }
+    void UpdateKey() { Key::SetRandomTable(); }
+    void SaveKey(const char * f) { Key::SaveTable(f); }
+    void LoadKey(const char * f) { Key::LoadTable(f); }
+    std::string HexKey() { return Key::HexEncKey(); }
+    std::string NetScheme() { return Network::NetScheme(); }
 
-    virtual void ProcessBlock(Block &block) {};
+    void ProcessBlock(Block &block) {};
+    void ProcessBlock(byte * block) {};
 };
 
 
 struct Enc : public NetCip
 {
-    void ProcessBlock(Block &block) override;
+    void ProcessBlock(Block &block);
+    void ProcessBlock(byte * block);
 };
 
 
 struct Dec : public NetCip
 {
-    void ProcessBlock(Block &block) override;
+    void ProcessBlock(Block &block);
+    void ProcessBlock(byte * block);
 };
 

@@ -10,10 +10,7 @@
 #include <vector>
 
 
-inline uint64_t NL ( const bool_vec &func );
-inline uint64_t NL ( const std::vector<Block> &blockSetAsBoolFunc );
-
-inline uint64_t NL ( const bool_vec &func )
+inline uint64_t NL ( const std::vector<bool> & func )
 {
     auto coef = WACoef(func);
 
@@ -23,19 +20,9 @@ inline uint64_t NL ( const bool_vec &func )
     return (coef.size() >> 1) - (
         std::abs(
             *std::max_element(coef.begin(), coef.end(),
-                [] (int64_t a, int64_t b) { return std::abs(a) < std::abs(b); }
-            )
-        ) >> 1
-    );
-}
-
-inline uint64_t NL(const std::vector<Block> &blockSetAsBoolFunc)
-{
-    auto coef = WACoef(blockSetAsBoolFunc);
-    return (coef.size() >> 1) - (
-        std::abs(
-            *std::max_element(coef.begin(), coef.end(),
-                [] (int64_t a, int64_t b) { return std::abs(a) < std::abs(b); }
+                [] (std::int64_t a, std::int64_t b) {
+                    return std::abs(a) < std::abs(b);
+                }
             )
         ) >> 1
     );

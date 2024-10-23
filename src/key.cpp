@@ -8,13 +8,13 @@
 #include <sstream>
 #include <type_traits>
 
-void Table::SetRandomTable()
+void Key::SetRandomTable()
 {
     GenerateTables();
 }
 
 
-std::string Table::HexEncKey() const {
+std::string Key::HexEncKey() const {
     std::ostringstream oss;
     for (size_t i = 0; i < TABLE_DIM; ++i) {
         for (size_t j = 0; j < TABLE_DIM; ++j) {
@@ -25,7 +25,7 @@ std::string Table::HexEncKey() const {
 }
 
 
-std::string Table::HexDecKey() const {
+std::string Key::HexDecKey() const {
     std::ostringstream oss;
     for (size_t i = 0; i < TABLE_DIM; ++i) {
         for (size_t j = 0; j < TABLE_DIM; ++j) {
@@ -35,7 +35,7 @@ std::string Table::HexDecKey() const {
     return oss.str();
 }
 
-bool Table::LoadTable(const char * filename)
+bool Key::LoadTable(const char * filename)
 {
 std::ifstream in(filename);
     if (!in) {
@@ -48,7 +48,7 @@ std::ifstream in(filename);
 }
 
 
-bool Table::SaveTable(const char * filename)
+bool Key::SaveTable(const char * filename)
 {
     std::ofstream out(filename);
     if (!out) {
@@ -60,7 +60,7 @@ bool Table::SaveTable(const char * filename)
 }
 
 
-void Table::GenerateTables()
+void Key::GenerateTables()
 {
 
     std::random_device d;
