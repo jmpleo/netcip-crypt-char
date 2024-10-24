@@ -44,8 +44,8 @@ int main(int argc, char** argv)
                 do {
                     dx = x; df = x; dx ^= a;
 
-                    enc.ProcessBlock(dx);  // after: dx = E(x+a)
-                    enc.ProcessBlock(df);  // after: df = E(x)
+                    enc(dx);  // after: dx = E(x+a)
+                    enc(df);  // after: df = E(x)
 
                     df ^= dx;
 

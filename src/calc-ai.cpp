@@ -51,7 +51,7 @@ int main(int argc, char** argv)
         // moreover, x=x_1x_2..x_nm ordered by lexicographic
         for (x = 0; x < funcLen; ++x) {
             blockSet[x] = x;
-            enc.ProcessBlock(blockSet[x]);
+            enc(blockSet[x]);
         }
 
         for (Block coef{1}; !coef.IsZero(); ++coef) {

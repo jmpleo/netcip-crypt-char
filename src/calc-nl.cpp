@@ -47,7 +47,7 @@ int main(int argc, char** argv)
 
         for (x = 0; x < funcLen; ++x) {
             blockSet[x] = x;
-            enc.ProcessBlock(blockSet[x]);
+            enc(blockSet[x]);
         }
 
         for (Block coef{1}; !coef.IsZero(); ++coef) {

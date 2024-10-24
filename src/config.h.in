@@ -7,6 +7,6 @@ constexpr const unsigned
     M = @__M@,
     H = @__H@;
 
-//static_assert(N * M < 64, "blocksize < 64");
+static_assert(N * M < 64, "blocksize < 64");
 
 }

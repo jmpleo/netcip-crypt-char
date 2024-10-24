@@ -23,4 +23,5 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in ${CMAKE_CURRENT_SOURCE_DI
 add_executable(netcip-mdp-${__N}-${__M}-${__H} ${MDP_SOURCES})
 add_executable(netcip-ai-${__N}-${__M}-${__H} ${AI_SOURCES})
 add_executable(netcip-nl-${__N}-${__M}-${__H} ${NL_SOURCES})
-add_executable(netcip-tmp main.cpp netcip.cpp key.cpp block.cpp)
+
+add_executable(netcip8x8-test netcip8x8/test/main.cpp)
