@@ -1,6 +1,5 @@
 bin
 build
 config.h
-main.cpp
 .*
 stat/report*
