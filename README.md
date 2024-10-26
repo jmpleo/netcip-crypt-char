@@ -86,3 +86,9 @@ after this tests and speedtest binaries created - run it:
 ~/netcip-crypt-char/netcip-application/bin/netcip-speedtest
 ```
 
+
+
+## Founded
+
+> Cherednik, I. V. On the use of binary operations for the construction of a multiply transitive class of block transformations / I. V. Cherednik // Discrete Mathematics and Applications.  2021.  31: 2. P. 91–111.) (Scopus, WoS) // https://www.mathnet.ru/rus/dm1597
+
