@@ -66,41 +66,49 @@ int main()
     char test[16];
 
     std::ifstream in;
+    std::string path;
 
     for (int i = 0; i < 100; ++i) {
 
-        in.open("cases/key/" + std::to_string(i), std::ios::binary);
+        path = std::string(TEST_DIR).append("/cases/key/").append(std::to_string(i));
+        in.open(path, std::ios::binary);
         in.read((char*)ekey, sizeof(ekey))
           .read((char*)dkey, sizeof(dkey));
         in.close();
 
-        in.open("cases/block/8/" + std::to_string(i), std::ios::binary);
+        path = std::string(TEST_DIR).append("/cases/block/8/").append(std::to_string(i));
+        in.open(path, std::ios::binary);
         in.read(test, 8);
         in.close();
 
-        in.open("cases/encrypt1/8/" + std::to_string(i), std::ios::binary);
+        path = std::string(TEST_DIR).append("/cases/encrypt1/8/").append(std::to_string(i));
+        in.open(path, std::ios::binary);
         in.read(expected, 8);
         in.close();
 
         test1_8x8(test, expected, ekey, dkey);
 
-        in.open("cases/encrypt2/8/" + std::to_string(i), std::ios::binary);
+        path = std::string(TEST_DIR).append("/cases/encrypt2/8/").append(std::to_string(i));
+        in.open(path, std::ios::binary);
         in.read(expected, 8);
         in.close();
 
         test2_8x8(test, expected, ekey, dkey);
 
-        in.open("cases/block/16/" + std::to_string(i), std::ios::binary);
+        path = std::string(TEST_DIR).append("/cases/block/16/").append(std::to_string(i));
+        in.open(path, std::ios::binary);
         in.read(test, 16);
         in.close();
 
-        in.open("cases/encrypt1/16/" + std::to_string(i), std::ios::binary);
+        path = std::string(TEST_DIR).append("/cases/encrypt1/16/").append(std::to_string(i));
+        in.open(path, std::ios::binary);
         in.read(expected, 16);
         in.close();
 
         test1_8x16(test, expected, ekey, dkey);
 
-        in.open("cases/encrypt2/16/" + std::to_string(i), std::ios::binary);
+        path = std::string(TEST_DIR).append("/cases/encrypt2/16/").append(std::to_string(i));
+        in.open(path, std::ios::binary);
         in.read(expected, 16);
         in.close();
 

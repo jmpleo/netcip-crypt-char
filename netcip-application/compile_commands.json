@@ -1,0 +1,12 @@
+[
+{
+  "directory": "/home/j/proj/netcip-crypt-char/netcip-application/build",
+  "command": "/usr/bin/c++ -DTEST_DIR=\\\"/home/j/proj/netcip-crypt-char/netcip-application/test\\\"   -Wall -O3 -std=gnu++17 -o CMakeFiles/netcip-test.dir/test/main.cpp.o -c /home/j/proj/netcip-crypt-char/netcip-application/test/main.cpp",
+  "file": "/home/j/proj/netcip-crypt-char/netcip-application/test/main.cpp"
+},
+{
+  "directory": "/home/j/proj/netcip-crypt-char/netcip-application/build",
+  "command": "/usr/bin/c++    -Wall -O3 -std=gnu++17 -o CMakeFiles/netcip-speedtest.dir/speedtest/main.cpp.o -c /home/j/proj/netcip-crypt-char/netcip-application/speedtest/main.cpp",
+  "file": "/home/j/proj/netcip-crypt-char/netcip-application/speedtest/main.cpp"
+}
+]
