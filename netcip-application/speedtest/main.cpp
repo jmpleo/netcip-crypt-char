@@ -2,6 +2,12 @@
 #include "../../netcip-research/src/progbar.h"
 
 #include <crypto++/aes.h>
+#include <crypto++/cryptlib.h>
+#include <crypto++/serpent.h>
+#include <crypto++/camellia.h>
+#include <crypto++/rc2.h>
+#include <crypto++/rc5.h>
+#include <crypto++/rc6.h>
 #include <crypto++/des.h>
 #include <crypto++/mars.h>
 #include <crypto++/chacha.h>
@@ -20,7 +26,9 @@
 #include <map>
 #include <iostream>
 
-#define Now() std::chrono::high_resolution_clock::now()
+std::chrono::high_resolution_clock::time_point now() {
+    return std::chrono::high_resolution_clock::now();
+}
 
 using namespace CryptoPP;
 
@@ -37,8 +45,9 @@ int main ()
     byte workBytes[16];
     byte keyBytes[256 * 256];
 
-    std::map<std::string, double> durations;
-
+    std::map<std::string, double> durations8;
+    std::map<std::string, double> durations16;
+    std::map<std::string, double> durations32;
 
     int cycle, iter,
         cycles = 10000,
@@ -56,134 +65,197 @@ int main ()
         { // 16
             AES::Encryption e(keyBytes, AES::DEFAULT_KEYLENGTH);
             std::memcpy(workBytes, bytesSrc, sizeof(workBytes));
-            auto start = Now();
+            auto start = now();
             for (cycle = 0; cycle < cycles; ++cycle) e.ProcessBlock(workBytes);
-            auto end = Now();
-            durations[e.AlgorithmName()] += (end - start).count();
+            auto end = now();
+            durations16[e.AlgorithmName()] += (end - start).count();
         }
 
         { // 8
             DES::Encryption e(keyBytes, DES::DEFAULT_KEYLENGTH);
             std::memcpy(workBytes, bytesSrc, sizeof(workBytes));
-            auto start = Now();
+            auto start = now();
             for (cycle = 0; cycle < cycles; ++cycle) e.ProcessBlock(workBytes);
-            auto end = Now();
-            durations[e.AlgorithmName()] += (end - start).count();
+            auto end = now();
+            durations8[e.AlgorithmName()] += (end - start).count();
+        }
+
+        { // 8
+            RC2::Encryption e(keyBytes, Blowfish::DEFAULT_KEYLENGTH);
+            std::memcpy(workBytes, bytesSrc, sizeof(workBytes));
+            auto start = now();
+            for (cycle = 0; cycle < cycles; ++cycle) e.ProcessBlock(workBytes);
+            auto end = now();
+            durations8[e.AlgorithmName()] += (end - start).count();
+        }
+
+        { // 8
+            RC5::Encryption e(keyBytes, Blowfish::DEFAULT_KEYLENGTH);
+            std::memcpy(workBytes, bytesSrc, sizeof(workBytes));
+            auto start = now();
+            for (cycle = 0; cycle < cycles; ++cycle) e.ProcessBlock(workBytes);
+            auto end = now();
+            durations8[e.AlgorithmName()] += (end - start).count();
+        }
+
+        { // 16
+            Serpent::Encryption e(keyBytes, Blowfish::DEFAULT_KEYLENGTH);
+            std::memcpy(workBytes, bytesSrc, sizeof(workBytes));
+            auto start = now();
+            for (cycle = 0; cycle < cycles; ++cycle) e.ProcessBlock(workBytes);
+            auto end = now();
+            durations16[e.AlgorithmName()] += (end - start).count();
+        }
+
+        { // 16
+            RC6::Encryption e(keyBytes, Blowfish::DEFAULT_KEYLENGTH);
+            std::memcpy(workBytes, bytesSrc, sizeof(workBytes));
+            auto start = now();
+            for (cycle = 0; cycle < cycles; ++cycle) e.ProcessBlock(workBytes);
+            auto end = now();
+            durations16[e.AlgorithmName()] += (end - start).count();
+        }
+
+        { // 16
+            Camellia::Encryption e(keyBytes, Blowfish::DEFAULT_KEYLENGTH);
+            std::memcpy(workBytes, bytesSrc, sizeof(workBytes));
+            auto start = now();
+            for (cycle = 0; cycle < cycles; ++cycle) e.ProcessBlock(workBytes);
+            auto end = now();
+            durations16[e.AlgorithmName()] += (end - start).count();
         }
 
         { // 8
             Blowfish::Encryption e(keyBytes, Blowfish::DEFAULT_KEYLENGTH);
             std::memcpy(workBytes, bytesSrc, sizeof(workBytes));
-            auto start = Now();
+            auto start = now();
             for (cycle = 0; cycle < cycles; ++cycle) e.ProcessBlock(workBytes);
-            auto end = Now();
-            durations[e.AlgorithmName()] += (end - start).count();
+            auto end = now();
+            durations8[e.AlgorithmName()] += (end - start).count();
         }
 
         { // 8
             CAST128::Encryption e(keyBytes, CAST128::DEFAULT_KEYLENGTH);
             std::memcpy(workBytes, bytesSrc, sizeof(workBytes));
-            auto start = Now();
+            auto start = now();
             for (cycle = 0; cycle < cycles; ++cycle) e.ProcessBlock(workBytes);
-            auto end = Now();
-            durations[e.AlgorithmName()] += (end - start).count();
+            auto end = now();
+            durations8[e.AlgorithmName()] += (end - start).count();
         }
 
         { // 16
             CAST256::Encryption e(keyBytes, CAST256::DEFAULT_KEYLENGTH);
             std::memcpy(workBytes, bytesSrc, sizeof(workBytes));
-            auto start = Now();
+            auto start = now();
             for (cycle = 0; cycle < cycles; ++cycle) e.ProcessBlock(workBytes);
-            auto end = Now();
-            durations[e.AlgorithmName()] += (end - start).count();
+            auto end = now();
+            durations16[e.AlgorithmName()] += (end - start).count();
         }
 
         { // 8
             DES_EDE3::Encryption e(keyBytes, DES_EDE3::DEFAULT_KEYLENGTH);
             std::memcpy(workBytes, bytesSrc, sizeof(workBytes));
-            auto start = Now();
+            auto start = now();
             for (cycle = 0; cycle < cycles; ++cycle) e.ProcessBlock(workBytes);
-            auto end = Now();
-            durations[e.AlgorithmName()] += (end - start).count();
+            auto end = now();
+            durations8[e.AlgorithmName()] += (end - start).count();
         }
 
         { // 32
             Threefish256::Encryption e(keyBytes, Threefish256::DEFAULT_KEYLENGTH);
             std::memcpy(workBytes, bytesSrc, sizeof(workBytes));
-            auto start = Now();
+            auto start = now();
             for (cycle = 0; cycle < cycles; ++cycle) e.ProcessBlock(workBytes);
-            auto end = Now();
-            durations[e.AlgorithmName()] += (end - start).count();
+            auto end = now();
+            durations32[e.AlgorithmName()] += (end - start).count();
         }
 
         { // 8
             GOST::Encryption e(keyBytes, GOST::DEFAULT_KEYLENGTH);
             std::memcpy(workBytes, bytesSrc, sizeof(workBytes));
-            auto start = Now();
+            auto start = now();
             for (cycle = 0; cycle < cycles; ++cycle) e.ProcessBlock(workBytes);
-            auto end = Now();
-            durations[e.AlgorithmName()] += (end - start).count();
+            auto end = now();
+            durations8[e.AlgorithmName()] += (end - start).count();
         }
 
         { // 16
             MARS::Encryption e(keyBytes, MARS::DEFAULT_KEYLENGTH);
             std::memcpy(workBytes, bytesSrc, sizeof(workBytes));
-            auto start = Now();
+            auto start = now();
             for (cycle = 0; cycle < cycles; ++cycle) e.ProcessBlock(workBytes);
-            auto end = Now();
-            durations[e.AlgorithmName()] += (end - start).count();
-        }
-
-       { // 8
-            byte ekey[1<<8][1<<8];
-            std::memcpy(ekey, keyBytes, sizeof(ekey));
-            std::memcpy(workBytes, bytesSrc, sizeof(workBytes));
-            auto start = Now();
-            for (cycle = 0; cycle < cycles; ++cycle) encrypt1_8x8(workBytes, ekey);
-            auto end = Now();
-            durations["encrypt1_8x8"] += (end - start).count();
+            auto end = now();
+            durations16[e.AlgorithmName()] += (end - start).count();
         }
 
         { // 8
             byte ekey[1<<8][1<<8];
             std::memcpy(ekey, keyBytes, sizeof(ekey));
             std::memcpy(workBytes, bytesSrc, sizeof(workBytes));
-            auto start = Now();
+            auto start = now();
+            for (cycle = 0; cycle < cycles; ++cycle) encrypt1_8x8(workBytes, ekey);
+            auto end = now();
+            durations8["encrypt1_8x8"] += (end - start).count();
+        }
+
+        { // 8
+            byte ekey[1<<8][1<<8];
+            std::memcpy(ekey, keyBytes, sizeof(ekey));
+            std::memcpy(workBytes, bytesSrc, sizeof(workBytes));
+            auto start = now();
             for (cycle = 0; cycle < cycles; ++cycle) encrypt2_8x8(workBytes, ekey);
-            auto end = Now();
-            durations["encrypt2_8x8"] += (end - start).count();
+            auto end = now();
+            durations8["encrypt2_8x8"] += (end - start).count();
         }
 
         { // 16
             byte ekey[1<<8][1<<8];
             std::memcpy(ekey, keyBytes, sizeof(ekey));
             std::memcpy(workBytes, bytesSrc, sizeof(workBytes));
-            auto start = Now();
+            auto start = now();
             for (cycle = 0; cycle < cycles; ++cycle) encrypt1_8x16(workBytes, ekey);
-            auto end = Now();
-            durations["encrypt1_8x16"] += (end - start).count();
+            auto end = now();
+            durations16["encrypt1_8x16"] += (end - start).count();
         }
 
         { // 16
             byte ekey[1<<8][1<<8];
             std::memcpy(ekey, keyBytes, sizeof(ekey));
             std::memcpy(workBytes, bytesSrc, sizeof(workBytes));
-            auto start = Now();
+            auto start = now();
             for (cycle = 0; cycle < cycles; ++cycle) encrypt2_8x16(workBytes, ekey);
-            auto end = Now();
-            durations["encrypt2_8x16"] += (end - start).count();
+            auto end = now();
+            durations16["encrypt2_8x16"] += (end - start).count();
         }
     }
 
     std::cout << std::endl;
 
-    for (const auto& [cipher, duration] : durations) {
-        double blocksPerMinute = (60.0 * 1e6) / duration;
-        std::cout
-            << std::right << std::setw(30) << cipher << ": "
-            << std::left << std::setw(15) << blocksPerMinute << " blocks/minute"
-            << std::endl;
-    }
+    auto report = [](
+        const std::map<std::string, double>& durations,
+        const std::string& blockSize
+    ) {
+        std::vector<std::pair<std::string, double>> sortedDurations(durations.begin(), durations.end());
+        std::sort(sortedDurations.begin(), sortedDurations.end(), [](const auto& a, const auto& b) {
+            return a.second < b.second; // Sort by duration
+        });
+
+        std::cout << "Block Size " << blockSize << ":\n";
+        for (const auto& [cipher, duration] : sortedDurations) {
+            double blocksPerMinute = (60.0 * 1e6) / duration;
+            std::cout
+                << std::right << std::setw(30) << cipher << ": "
+                << std::left << std::setw(15) << blocksPerMinute << " blocks/minute"
+                << std::endl;
+        }
+        std::cout << std::endl;
+    };
+
+    report(durations8, "8");
+    report(durations16, "16");
+    report(durations32, "32");
+
+    std::cout << "crypto++: " << CryptoPP::LibraryVersion() << std::endl;
 
     return 0;
 }

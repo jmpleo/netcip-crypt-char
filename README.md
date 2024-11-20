@@ -72,6 +72,12 @@ cd ~/netcip-crypt-char
 
 ### Application Build
 
+`crypto++` required:
+
+```bash
+sudo apt install libcrypto++-dev
+```
+
 ```bash
 cd ~/netcip-crypt-char/netcip-application
 cmake -B build
@@ -85,6 +91,45 @@ after this tests and speedtest binaries created - run it:
 ~/netcip-crypt-char/netcip-application/bin/netcip-test
 ~/netcip-crypt-char/netcip-application/bin/netcip-speedtest
 ```
+
+#### Speedtest:
+
+- `Linux j 6.1.0-21-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03) x86_64 GNU/Linux ` 
+- `Intel Core i5-6200u`
+- `crypto++ 8`
+
+##### Block Size 8
+
+| Cipher          | Blocks/Minute   |
+|------------------|-----------------|
+| **encrypt2_8x8** | **0.130471**    |
+| **encrypt1_8x8** | **0.129512**    |
+| RC5              | 0.113666        |
+| Blowfish         | 0.0612267       |
+| CAST-128         | 0.054692        |
+| DES              | 0.0362695       |
+| GOST             | 0.0327214       |
+| RC2              | 0.0263849       |
+| DES-EDE3         | 0.013939        |
+
+##### Block Size 16
+
+| Cipher          | Blocks/Minute   |
+|------------------|-----------------|
+| AES              | 0.198288        |
+| **encrypt2_8x16** | **0.069381**    |
+| **encrypt1_8x16** | **0.0610018**   |
+| RC6              | 0.0491878       |
+| MARS             | 0.03446         |
+| Camellia         | 0.0344332       |
+| CAST-256         | 0.0255286       |
+| Serpent          | 0.0199389       |
+
+##### Block Size 32
+
+| Cipher                | Blocks/Minute   |
+|------------------------|-----------------|
+| Threefish-256(256)     | 0.0395069       |
 
 
 
