@@ -32,7 +32,9 @@ bool testCase(
     char block[blockSize];
     std::copy_n(test, blockSize, block);
 
-    std::cerr << "\nTEST [" << std::setw(3) << testNumber << "]: ";
+    std::cerr
+        << std::setw(3) << "\n#" << testNumber
+        << "\t( " << std::setw(2) << blockSize << " bytes )";
 
     encrypt(reinterpret_cast<byte*>(block), ekey);
     if (std::memcmp(block, expected, blockSize) != 0) {
@@ -40,15 +42,15 @@ bool testCase(
         return false;
     }
 
-    std::cerr << "\tencrypt pass";
+    std::cerr << "\tencrypt PASS";
 
     decipher(reinterpret_cast<byte*>(block), dkey);
     if (std::memcmp(block, test, blockSize) != 0) {
-        std::cerr << ",\tdecipher FAILED";
+        std::cerr << "\tdecipher FAILED";
         return false;
     }
 
-    std::cerr << ",\tdecipher pass";
+    std::cerr << "\tdecipher PASS";
 
     return true;
 }
@@ -116,7 +118,7 @@ int main() {
         allTestsPassed = allTestsPassed && testCase<16>(
             test, expected,
             ekey, dkey,
-            &encrypt2_8x16, &decipher1_8x16,
+            &encrypt1_8x16, &decipher1_8x16,
             i
         );
 
